@@ -54,6 +54,10 @@ Modern hackers hide injections inside Skill payloads, web scraping results, or R
 
 The LLM may get brainwashed, but Vajra Claw™ cuts off its hands and seals its mouth before the damage is done.
 
+## 🔒 Zero-Trust Privilege Separation
+Vajra Claw™ enforces strict privilege separation at the OS level. The AI Agent must **never** be granted write permissions to Vajra.md. 
+In enterprise Kubernetes/Docker deployments, Vajra.md is mounted as a **Read-Only ConfigMap**. Even if the LLM becomes entirely hostile and attempts to modify its own constraints via system commands, the OS-level file permissions will physically deny the action. Only human CISOs or authorized CI/CD pipelines can forge new Vajra rules.
+
 ## 💰 Pricing & Licensing (Commercial)
 
 | Tier | Price | Best For | Included |
