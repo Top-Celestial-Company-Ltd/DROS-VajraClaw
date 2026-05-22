@@ -9,6 +9,24 @@ Prompt Engineering is dead when it comes to enterprise security. No matter how c
 
 **VajraClaw** is NOT a prompt wrapper. It is a **C-Shared Binary Microkernel (`.dll` / `.so`)** that sits directly on the socket stream. It utilizes a Dual-Channel Memory Matrix to perform $O(1)$ byte-level interception of LLM output tokens. If the LLM attempts to output a prohibited concept, VajraClaw triggers a **Physical Fusing (PermissionError)** and terminates the process before the user ever sees a single word.
 
+
+## 🤖 OpenClaw / AutoGPT Integration
+Are you running autonomous agents like **OpenClaw**? Add VajraClaw as your physical safety collar in 3 steps:
+1. Drop ajra_claw.dll and claw_adapter.py into your agent's core directory.
+2. Define your unbreachable rules in Vajra.md (e.g., NO_SYSTEM_DELETION).
+3. Wrap your LLM streaming function:
+`python
+# Inside OpenClaw's core/llm.py
+from claw_adapter import VajraClawAdapter
+safety_collar = VajraClawAdapter('vajra_claw.dll', 'Vajra.md')
+
+def generate_response(prompt):
+    clean_prompt = safety_collar.intercept_and_inject(prompt)
+    for token in llm_client.stream(clean_prompt):
+        safety_collar.stream_monitor(token) # Instantly kills the agent if it outputs a rogue command
+        yield token
+`
+
 ---
 
 ## 🔥 Enterprise Features
@@ -48,6 +66,7 @@ claw.cleanup()
 
 | Tier | Price | Best For | Included |
 | :--- | :--- | :--- | :--- |
+| **Indie / Personal** |  / yr (or  Lifetime) | Solo devs, students, hobbyists | Single personal project, community support (Revenue <) |
 | **Startup License** | $499 / yr | Small teams & SaaS MVP | Single Project, Standard Python Adapters, Community Support |
 | **Enterprise SLA** | $4,990 / yr | High-Security Corporate & Gov | Unlimited Projects, Custom C++/NodeJS Bindings, 24/7 Priority Support |
 | **Source Code Buyout**| Custom | Defense, Medical, Finance | Full Source Code (Go/C), Audit Reports, White-labeling rights |
