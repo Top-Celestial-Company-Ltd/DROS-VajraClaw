@@ -67,9 +67,9 @@ claw.cleanup()
 
 | Tier | Price | Best For | Included |
 | :--- | :--- | :--- | :--- |
-| **Indie / Personal** |  / yr (or  Lifetime) | Solo devs, students, hobbyists | Single personal project, community support (Revenue <) |
+| **Indie / Personal** |  / yr (or  Lifetime) | Solo devs, students, hobbyists | Requires online validation (Heartbeat), Single project, Revenue < |
 | **Startup License** | $499 / yr | Small teams & SaaS MVP | Single Project, Standard Python Adapters, Community Support |
-| **Enterprise SLA** | $4,990 / yr | High-Security Corporate & Gov | Unlimited Projects, Custom C++/NodeJS Bindings, Priority Email Support |
+| **Enterprise Offline License** | $4,990 / yr | High-Security Corporate & Gov | Unlimited Projects, Custom C++/NodeJS Bindings, Priority Email Support |
 | **Source Code Buyout**| Custom | Defense, Medical, Finance | Full Source Code (Go/C), Audit Reports, White-labeling rights |
 
 ---
