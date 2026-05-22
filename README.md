@@ -73,5 +73,5 @@ claw.cleanup()
 | **Source Code Buyout**| Custom | Defense, Medical, Finance | Full Source Code (Go/C), Audit Reports, White-labeling rights |
 
 ---
-**Developed by Top-Celestial Company Ltd. / Jimmy Chen**
+**Developed by Top-Celestial Company Ltd. (康宸園有限公司) / Jimmy Chen**
 *Securing the AI frontier through Epistemic Physical Limits.*
