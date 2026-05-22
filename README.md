@@ -76,6 +76,15 @@ The LLM may get brainwashed, but Vajra Claw™ cuts off its hands and seals its 
 Vajra Claw™ enforces strict privilege separation at the OS level. The AI Agent must **never** be granted write permissions to Vajra.md. 
 In enterprise Kubernetes/Docker deployments, Vajra.md is mounted as a **Read-Only ConfigMap**. Even if the LLM becomes entirely hostile and attempts to modify its own constraints via system commands, the OS-level file permissions will physically deny the action. Only human CISOs or authorized CI/CD pipelines can forge new Vajra rules.
 
+## ⚠️ Out of Scope (What Vajra Claw DOES NOT Protect Against)
+To build trust with enterprise CISOs, we are 100% transparent about the physical limits of our O(1) architecture. **Vajra Claw is a circuit breaker, not a semantic reasoning engine.** It does NOT protect against:
+
+1. **Semantic Subversion (Synonym Bypassing):** If you blacklist `"delete database"`, but the LLM outputs `"drop the tables"`, Vajra Claw will let it pass. We perform strict, O(1) byte-matching, not NLP semantic analysis.
+2. **Encoded/Obfuscated Payloads:** If the LLM generates a malicious command encoded in Base64 or Hex, Vajra Claw will not decrypt and scan it (unless you explicitly blacklist the encoded signature).
+3. **Host Environment Vulnerabilities:** We stop the LLM's vocal cords. We cannot stop your Python environment from executing arbitrary code if your system permissions are already compromised.
+
+**The Golden Rule:** Use Vajra Claw as the ultimate inner shield, but always keep your Sandbox (Docker/K8s) as the outer armor.
+
 ## 💰 Pricing & Licensing (Commercial)
 
 | Tier | Price | Best For | Included |
