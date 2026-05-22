@@ -9,5 +9,8 @@ Any use, reproduction, modification, distribution, or integration into commercia
 ## 2. Prohibition of Reverse Engineering
 You may not reverse engineer, decompile, or disassemble the binary files (`.dll`, `.so`, `.dylib`) provided with the Software.
 
-## 3. Limitation of Liability
+## 4. Trademarks
+"DROS", "Vajra Agent", and "Vajra Claw" are registered trademarks of Kangchenyuan Co., Ltd. / Jimmy Chen. You may not use these trademarks in any commercial capacity without explicit written permission.
+
+## 5. Limitation of Liability
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY.

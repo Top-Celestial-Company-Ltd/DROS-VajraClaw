@@ -1,8 +1,9 @@
-# 🦞 DROS-VajraClaw (金剛蝦)
+# 🦞 DROS™ Vajra Claw™ (金剛蝦)
 **The Ultimate O(1) Runtime Physical Circuit Breaker for LLMs**
 
 [![Marketplace Status](https://img.shields.io/badge/GitHub_Marketplace-Available-success)](https://github.com/marketplace/dros-vajraclaw)
 [![License](https://img.shields.io/badge/License-Commercial-blue.svg)](#)
+[![Official Website](https://img.shields.io/badge/Website-dr--os.io-purple.svg)](https://dr-os.io)
 
 ## 🛑 Stop LLM Hallucinations at the Memory Level
 Prompt Engineering is dead when it comes to enterprise security. No matter how complex your System Prompt is, Jailbreaks and Prompt Injections will find a way through. 
