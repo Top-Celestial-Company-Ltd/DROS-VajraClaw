@@ -63,6 +63,15 @@ claw.cleanup()
 
 ---
 
+## 🕷️ Defeating Indirect Prompt Injections (Data Poisoning)
+Modern hackers hide injections inside Skill payloads, web scraping results, or RAG documents to brainwash the LLM. 
+**Vajra Claw™ executes a Dual-Choke defense against these invisible attacks:**
+
+1. **Ingress Filtering (Skill Feedback Scanning):** Before external data is fed to the LLM, pass it through the C-FFI matrix. If the retrieved PDF or webpage contains malicious trigger words, the system destroys the payload before the LLM ever reads it.
+2. **Egress Filtering (Output Stream Meltdown):** Even if the LLM is successfully brainwashed by an indirect injection, it must physically output the malicious command (e.g., [ToolCall: TransferMoney]) to execute the attack. The C-FFI interceptor sits directly on the SSE output stream, physically blowing the fuse the millisecond the LLM attempts to articulate the forbidden action.
+
+The LLM may get brainwashed, but Vajra Claw™ cuts off its hands and seals its mouth before the damage is done.
+
 ## 💰 Pricing & Licensing (Commercial)
 
 | Tier | Price | Best For | Included |
