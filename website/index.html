@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DROS™ Vajra Claw™ | O(1) LLM Circuit Breaker</title>
+    <meta name="description" content="The Ultimate O(1) Runtime Physical Circuit Breaker for LLMs. Stop prompt injections and hallucinations at the memory level.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <span class="icon">🦞</span>
+            <span class="brand">DROS™ <span class="highlight">Vajra Claw™</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#integration">Integration</a>
+            <a href="#pricing">Pricing</a>
+            <a href="https://github.com/marketplace/dros-vajraclaw" class="btn btn-outline">GitHub</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="glow-orb"></div>
+        <div class="hero-content">
+            <div class="badge">Enterprise AI Security</div>
+            <h1>The Ultimate <span class="highlight">O(1)</span> Physical <br>Circuit Breaker for LLMs</h1>
+            <p>Prompt Engineering is dead. Stop hallucinations, data leaks, and Prompt Injections at the C-FFI memory layer before the token ever reaches your system.</p>
+            <div class="cta-group">
+                <a href="#pricing" class="btn btn-primary">Get Commercial License</a>
+                <a href="#integration" class="btn btn-secondary">View Documentation</a>
+            </div>
+        </div>
+        <div class="hero-graphic">
+            <div class="terminal">
+                <div class="terminal-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="terminal-body">
+                    <code><span class="cmd">[ClawAdapter]</span> Mount Binary: vajra_claw.dll</code>
+                    <code><span class="cmd">[VajraClaw-Core]</span> ⚡ Static Vajra Matrix Locked.</code>
+                    <code><span class="cmd">[VajraClaw-Core]</span> 💉 Ephemeral Bounds Injected.</code>
+                    <code><span class="text">LLM Stream: The internal IP address is...</span></code>
+                    <code><span class="err">[VajraClaw-Exception]</span> 🛑 PHYSICAL FUSE BLOWN: Token [IP] Blocked</code>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2>Unbreakable by Design</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Three-Tier Sovereignty</h3>
+                <p>Keep your prompts short. Define absolute corporate boundaries in the Static Vajra Matrix, and inject ephemeral constraints via JIT pointers that evaporate after use.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>True O(1) Interception</h3>
+                <p>Built in high-performance Go/C. Evaluates token streams instantly via C-FFI without the massive latency overhead of HTTP API proxy firewalls.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔌</div>
+                <h3>Air-Gapped Ready</h3>
+                <p>Zero outbound telemetry. Your data never leaves your server. Trust-based enterprise licensing ensures your CI/CD pipelines and Docker clusters run smoothly.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integration Section -->
+    <section id="integration" class="integration">
+        <div class="integration-content">
+            <h2>Zero-Pollution Integration</h2>
+            <p>Ready to plug into LangChain, OpenClaw, AutoGPT, or your custom gateway in under 5 lines of Python.</p>
+            <div class="code-block">
+<pre><code><span class="keyword">from</span> adapters.claw_adapter <span class="keyword">import</span> VajraClawAdapter
+
+<span class="comment"># 1. Mount the Binary Hardware</span>
+claw = VajraClawAdapter(<span class="string">"./core/vajra_claw.dll"</span>, <span class="string">"Vajra.md"</span>)
+
+<span class="comment"># 2. Intercept & Stream</span>
+clean_prompt = claw.intercept_and_inject(user_input)
+<span class="keyword">for</span> token <span class="keyword">in</span> llm.stream(clean_prompt):
+    claw.stream_monitor(token) <span class="comment"># ⚡ Physical fuse triggers here!</span>
+    <span class="function">print</span>(token)</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <h2>Transparent Enterprise Pricing</h2>
+        <p class="subtitle">Disruptive flat-fee model. No API taxes. Scale infinitely.</p>
+        <div class="pricing-grid">
+            <div class="price-card">
+                <h3>Indie / Personal</h3>
+                <div class="price">$49<span class="period">/ yr</span> <br><span class="lifetime">or $99 Lifetime</span></div>
+                <ul class="features-list">
+                    <li>Single Personal Project</li>
+                    <li>Community Support</li>
+                    <li>Max Revenue < $100k</li>
+                </ul>
+                <a href="#" class="btn btn-outline">Buy Now</a>
+            </div>
+            <div class="price-card featured">
+                <div class="popular-badge">Most Popular</div>
+                <h3>Startup License</h3>
+                <div class="price">$499<span class="period">/ yr</span></div>
+                <ul class="features-list">
+                    <li>Single Company Product</li>
+                    <li>Standard Python Adapters</li>
+                    <li>Priority Email Support</li>
+                </ul>
+                <a href="#" class="btn btn-primary">Start Trial</a>
+            </div>
+            <div class="price-card">
+                <h3>Enterprise SLA</h3>
+                <div class="price">$4,990<span class="period">/ yr</span></div>
+                <ul class="features-list">
+                    <li><strong>Unlimited Internal Deployments</strong></li>
+                    <li>Custom C++/NodeJS Bindings</li>
+                    <li>Direct Core-Dev Support</li>
+                </ul>
+                <a href="#" class="btn btn-outline">Contact Sales</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">🦞 DROS™ Vajra Claw™</div>
+            <p>&copy; 2026 Top-Celestial Company Ltd. (康宸園有限公司, Tax ID: 43908974) / Jimmy Chen. All rights reserved.</p>
+            <p class="dharma-note">Dharma Exemption: Purely non-profit Buddhist propagation usage is 100% free.</p>
+        </div>
+    </footer>
+</body>
+</html>
