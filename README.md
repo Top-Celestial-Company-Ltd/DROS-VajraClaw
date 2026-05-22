@@ -52,8 +52,6 @@ claw.cleanup()
 | **Enterprise SLA** | $4,990 / yr | High-Security Corporate & Gov | Unlimited Projects, Custom C++/NodeJS Bindings, 24/7 Priority Support |
 | **Source Code Buyout**| Custom | Defense, Medical, Finance | Full Source Code (Go/C), Audit Reports, White-labeling rights |
 
-> **Note**: Educational and purely non-profit Dharma propagation usage remains completely **FREE**. Contact us for the Non-Profit License Key.
-
 ---
 **Developed by Kangchenyuan Co., Ltd. / Jimmy Chen**
 *Securing the AI frontier through Epistemic Physical Limits.*
