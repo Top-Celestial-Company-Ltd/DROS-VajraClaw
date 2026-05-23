@@ -1,9 +1,17 @@
 import ctypes
 import os
 import re
+import platform
 
 class VajraClawAdapter:
     def __init__(self, core_dll_path: str, static_rule_path: str):
+        # 1. 偵測作業系統，自動切換附檔名
+        system_os = platform.system()
+        if system_os == "Windows" and not core_dll_path.endswith('.dll'):
+            core_dll_path += '.dll'
+        elif system_os == "Linux" and not core_dll_path.endswith('.so'):
+            core_dll_path += '.so'
+
         # 載入 C-Shared 二進位晶片
         try:
             self.lib = ctypes.CDLL(core_dll_path)

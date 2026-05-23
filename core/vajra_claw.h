@@ -79,10 +79,10 @@ typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
 extern "C" {
 #endif
 
-extern __declspec(dllexport) int init_static_vajra(char* filepath);
-extern __declspec(dllexport) int inject_ephemeral_rule(char* ruleString);
-extern __declspec(dllexport) int match_token_stream(char* inputString);
-extern __declspec(dllexport) void clear_ephemeral_rules();
+extern int init_static_vajra(char* filepath);
+extern int inject_ephemeral_rule(char* ruleString);
+extern int match_token_stream(char* inputString);
+extern void clear_ephemeral_rules();
 
 #ifdef __cplusplus
 }
