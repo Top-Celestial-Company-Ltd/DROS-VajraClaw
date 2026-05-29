@@ -1,0 +1,18 @@
+# Android build artifacts
+vajraclaw_sdk/android_test/app/build/
+vajraclaw_sdk/android_test/.gradle/
+*.apk
+*.aab
+
+# Go build artifacts
+*.dll
+*.so
+*.dylib
+
+# Go test cache
+vendor/
+
+# IDE
+.idea/
+*.iml
+.DS_Store
