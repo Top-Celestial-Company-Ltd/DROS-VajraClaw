@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | DROS™ Vajra Claw™</title>
+    <meta name="description" content="Frequently Asked Questions about Vajra Claw, the O(1) LLM Circuit Breaker.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .faq-section {
+            padding: 8rem 5%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .faq-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .faq-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        .faq-item:hover {
+            border-color: rgba(230, 57, 70, 0.3);
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .faq-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .faq-question::before {
+            content: 'Q.';
+            color: var(--primary-color);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+        }
+        .faq-answer {
+            color: var(--text-dim);
+            line-height: 1.7;
+            padding-left: 2.5rem;
+        }
+        .faq-answer p {
+            margin-bottom: 1rem;
+        }
+        .faq-answer p:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo" style="text-decoration: none; color: inherit;">
+            <span class="icon">🦞</span>
+            <span class="brand">DROS™ <span class="highlight">Vajra Claw™</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html#features">Features</a>
+            <a href="docs.html">Documentation</a>
+            <a href="faq.html" class="active">FAQ</a>
+            <a href="index.html#pricing">Pricing</a>
+            <a href="mailto:service@dr-os.io">Contact</a>
+        </div>
+    </nav>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-header">
+            <div class="badge">Enterprise Security</div>
+            <h1>Chief Technology Officer <span class="highlight">FAQ</span></h1>
+            <p style="color: var(--text-dim); margin-top: 1rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Uncompromising answers to the most critical architecture, security, and licensing questions.
+            </p>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Why buy VajraClaw when the DROS Digital Dharma Hall is open-source (Python)?</div>
+            <div class="faq-answer">
+                <p>The open-source DROS Python version is a "glass cannon"—perfect for personal use or non-profit Buddhist propagation, but vulnerable in an enterprise environment. It runs on the Python interpreter, which is easily inspected, modified, and struggles under high-concurrency (TPS) loads.</p>
+                <p><strong>VajraClaw is the Enterprise Armor.</strong> It is compiled into a highly optimized, tamper-proof C/Go microkernel (<code>vajra_claw.dll</code> / <code>.so</code>). It operates at the C-FFI memory layer, executing physical interception 100x faster than Python, making it the only choice for banks, tech giants, and organizations handling millions of tokens per second.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Can this be installed as an antivirus on top of Claude Code, GitHub Copilot, or ChatGPT?</div>
+            <div class="faq-answer">
+                <p><strong>No.</strong> VajraClaw is an SDK/Middleware for developers building <em>their own</em> AI systems, not a consumer antivirus.</p>
+                <p>Closed-source products like Claude Code run on proprietary infrastructure. VajraClaw must be integrated directly into your agent's orchestration loop (e.g., LangChain, AutoGPT, OpenClaw, or custom Node.js frameworks) via our C-FFI adapters. It intercepts the LLM string stream <em>before</em> your system executes any actions.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How exactly does it solve AI Hallucinations?</div>
+            <div class="faq-answer">
+                <p>LLMs are probabilistic; they will eventually hallucinate. Traditional prompt engineering tries to "talk the LLM out of it"—a statistically doomed approach.</p>
+                <p>VajraClaw accepts that hallucinations happen, but <strong>physically cuts off their consequences</strong>. By forcing the LLM's output through a deterministic Static Matrix (the "Vajra Bound"), any hallucinated command (e.g., <code>DROP TABLE</code>) that violates your predefined physical boundaries will instantly blow the C-FFI fuse. The hallucination is contained in memory and never reaches the real world.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How does VajraClaw prevent Prompt Injections (Data Poisoning)?</div>
+            <div class="faq-answer">
+                <p>Prompt injections often occur when an LLM reads external data (like an infected web page or RAG document) containing malicious hidden instructions, hijacking the LLM to execute unauthorized API calls or leak data.</p>
+                <p>VajraClaw operates as an ingress/egress physical filter. Even if the LLM's "brain" is hijacked by a prompt injection, the LLM's "hands" are bound by the Vajra Claw. When the hijacked LLM attempts an unauthorized Egress action, the C-FFI physical circuit breaker triggers, stopping the injection dead in its tracks. It's a 100% deterministic block.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">What is the Return on Investment (ROI) regarding LLM Token costs?</div>
+            <div class="faq-answer">
+                <p>Traditional AI security solutions rely on "LLM-as-a-judge" mechanisms. This means every time your Agent generates a response, you must send that response back to an LLM to evaluate if it's safe. This effectively <strong>doubles your LLM API token costs</strong> and cuts your profit margins in half.</p>
+                <p>Because VajraClaw executes locally within your C-FFI memory layer, it evaluates security boundaries for <strong>$0.00 in token costs</strong>. For enterprise applications processing millions of tokens per day, the API token savings alone will pay for your Enterprise VajraClaw license within the first week.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">What is the "Dharma Exemption" for Buddhist and Non-Profit Organizations?</div>
+            <div class="faq-answer">
+                <p>As part of our core philosophy, purely non-profit Buddhist propagation usage is 100% free.</p>
+                <p>While the Python version is freely available to everyone, Buddhist institutions requiring the high-performance Go/C++ enterprise versions (for large-scale Dharma processing) can contact us directly at <a href="mailto:service@dr-os.io" style="color: var(--primary-color);">service@dr-os.io</a>. After verifying your non-profit status, we will issue a specialized enterprise license completely free of charge.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">My enterprise requires strict Air-Gapping. Does VajraClaw phone home?</div>
+            <div class="faq-answer">
+                <p>The <strong>Enterprise Tier</strong> is 100% Air-Gapped. It uses an RSA-Signed offline <code>.lic</code> timebomb validation mechanism. There is absolutely zero outbound telemetry, no heartbeat servers, and no API tax. Your data never leaves your internal Kubernetes clusters.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">🦞 DROS™ Vajra Claw™</div>
+            <p>&copy; 2026 Top-Celestial Company Ltd. (康宸園有限公司) | Tax ID (統編): 43908974</p>
+            <p>Contact Us: <a href="mailto:service@dr-os.io" style="color: var(--primary-color); text-decoration: none;">service@dr-os.io</a></p>
+            <p class="dharma-note">Dharma Exemption: Purely non-profit Buddhist propagation usage is 100% free.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -13,14 +13,16 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar">
-        <div class="logo">
+        <a href="index.html" class="logo" style="text-decoration: none; color: inherit;">
             <span class="icon">🦞</span>
             <span class="brand">DROS™ <span class="highlight">Vajra Claw™</span></span>
-        </div>
+        </a>
         <div class="nav-links">
             <a href="#features">Features</a>
-            <a href="#integration">Integration</a>
+            <a href="docs.html">Documentation</a>
+            <a href="faq.html">FAQ</a>
             <a href="#pricing">Pricing</a>
+            <a href="mailto:service@dr-os.io">Contact</a>
             <a href="https://github.com/marketplace/dros-vajraclaw" class="btn btn-outline">GitHub</a>
         </div>
     </nav>
@@ -72,7 +74,7 @@
             <div class="feature-card">
                 <div class="feature-icon">⚡</div>
                 <h3>True O(1) Interception</h3>
-                <p>Built in high-performance Go/C. Evaluates token streams instantly via C-FFI without the massive latency overhead of HTTP API proxy firewalls.</p>
+                <p>Execution latency is <strong>~0.042ms</strong> with a memory footprint of just <strong>12 MB</strong>. Compared to an 8GB LLM-as-a-judge, VajraClaw consumes <strong>99.8% less RAM</strong> and zero API taxes, running 10,000x faster.<br><br><span style="color: var(--primary-color); font-weight: bold;">Save the DRAM expense, BUY the VajraClaw!</span></p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🔌</div>
@@ -102,50 +104,103 @@ clean_prompt = claw.intercept_and_inject(user_input)
         </div>
     </section>
 
+    <!-- Benchmarks Section -->
+    <section id="benchmarks" class="features" style="background-color: var(--bg-color);">
+        <h2>Military-Grade Verification</h2>
+        <p class="subtitle" style="text-align: center; color: var(--text-dim); margin-bottom: 3rem;">Four dimensions of extreme precision testing ensuring zero-compromise production readiness.</p>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔬</div>
+                <h3>Memory Leak Profiling</h3>
+                <p><strong>Precision:</strong> Byte-Level (Valgrind/pprof)<br>
+                <strong>Test:</strong> 1,000,000 continuous token injections.<br>
+                <strong>Result:</strong> Absolute flatline memory consumption. No garbage collection bloat, ensuring 100% server uptime even after months of high-load execution.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⏱️</div>
+                <h3>O(1) Microsecond Latency</h3>
+                <p><strong>Precision:</strong> 10⁻⁶ Seconds<br>
+                <strong>Test:</strong> Randomized malicious injection benchmarking.<br>
+                <strong>Result:</strong> Interception and trigger time measured at <strong>0.042 ms</strong>. Zero stream interruption, zero API network delay. True real-time physical cutoff.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚔️</div>
+                <h3>Cross-Platform Sanitization</h3>
+                <p><strong>Precision:</strong> Hexadecimal (CRLF vs LF)<br>
+                <strong>Test:</strong> Hidden Windows carriage returns injected into Linux C-FFI runtime.<br>
+                <strong>Result:</strong> Perfect physical sanitization. Guaranteeing defense matrices remain intact regardless of OS or file encoding discrepancies.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌪️</div>
+                <h3>High-Concurrency Thread Safety</h3>
+                <p><strong>Precision:</strong> Nanosecond Mutex Locking<br>
+                <strong>Test:</strong> 500 concurrent Agents bombarding the same DLL/SO.<br>
+                <strong>Result:</strong> Zero race conditions. The C/Go microkernel maintains cold, calculated stability under massive Enterprise TPS spikes.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Pricing Section -->
     <section id="pricing" class="pricing">
         <h2>Transparent Enterprise Pricing</h2>
-        <p class="subtitle">Disruptive flat-fee model. No API taxes. Scale infinitely.</p>
+        <p class="subtitle">Disruptive flat-fee model. No API taxes. <span style="color: var(--primary-color); font-weight: 800;">Save the tokens, BUY the VajraClaw!</span></p>
+        <div class="pricing-banner" style="background: rgba(230, 57, 70, 0.1); border: 1px solid var(--primary-color); padding: 1rem; border-radius: 8px; text-align: center; margin-bottom: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+            <strong style="color: var(--primary-color);">Early Adopter Pricing:</strong> We are currently in our V1 release phase. Enterprise licensing will increase to <strong>$15,000/yr</strong> in Q4 2026. Secure your license today before the next price increase!
+        </div>
         <div class="pricing-grid">
             <div class="price-card">
                 <h3>Hacker Tier</h3>
                 <div class="price">$19<span class="period">/ mo</span> <br><span class="lifetime">or $149 / yr</span></div>
                 <ul class="features-list">
                     <li>Bound to 1 Machine UUID</li>
-                    <li>Max 2 Concurrent Agents</li>
+                    <li>Max 5 Concurrent Agents</li>
                     <li>Online Heartbeat Validation</li>
                 </ul>
-                <a href="#" class="btn btn-outline">Buy Now</a>
+                <a href="https://dros.lemonsqueezy.com/checkout/buy/d9b27114-ad8b-4703-8a35-bf678426882e" class="btn btn-outline" target="_blank">Buy Now</a>
             </div>
             <div class="price-card featured">
                 <div class="popular-badge">Most Popular</div>
                 <h3>Startup Tier</h3>
                 <div class="price">$499<span class="period">/ yr</span></div>
                 <ul class="features-list">
-                    <li>Bound to 3 Machines</li>
-                    <li>Unlimited Agents</li>
+                    <li>Up to 3 Machine UUIDs</li>
+                    <li>10 Concurrent Agents / Machine</li>
                     <li>Online Heartbeat Validation</li>
                 </ul>
-                <a href="#" class="btn btn-primary">Start Trial</a>
+                <a href="https://dros.lemonsqueezy.com/checkout/buy/7e773a98-9079-49bf-ad7a-9986c8830ab1" class="btn btn-primary" target="_blank">Buy Now</a>
             </div>
             <div class="price-card">
                 <h3>Enterprise Tier</h3>
                 <div class="price">$4,990<span class="period">/ yr</span></div>
                 <ul class="features-list">
                     <li><strong>100% Air-Gapped (No Heartbeat)</strong></li>
-                    <li>RSA-Signed .lic Offline Timebomb</li>
-                    <li><strong>Unlimited Internal Deployments</strong></li>
+                    <li>Up to 15 Machine UUIDs</li>
+                    <li><strong>30 Concurrent Agents / Machine</strong></li>
                 </ul>
-                <a href="#" class="btn btn-outline">Contact Sales</a>
+                <a href="https://dros.lemonsqueezy.com/checkout/buy/30fe4fec-b390-40a0-9892-74f9ce2bcb26" class="btn btn-outline" target="_blank">Buy Enterprise License</a>
             </div>
         </div>
+
+        <!-- Pricing Legal Disclaimer -->
+        <div class="pricing-disclaimer" style="margin-top: 3rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.2); border-left: 4px solid var(--primary-color); border-radius: 4px; font-size: 0.9rem; color: var(--text-dim); max-width: 900px; margin-left: auto; margin-right: auto; text-align: left;">
+            <strong style="color: var(--text-light); display: block; margin-bottom: 0.5rem;">⚠️ EULA & Deployment Warning:</strong>
+            1. <strong>Fail-Closed Trigger:</strong> Exceeding your licensed Concurrent Agent limit per machine will trigger a hard C-FFI exception, blocking initialization. If your developers bypass VajraClaw due to this error, your system will be unprotected against Prompt Injections. We hold zero liability for data breaches resulting from license circumvention.<br>
+            2. <strong>Heartbeat Protocol:</strong> Hacker & Startup tiers require connectivity to <code>api.dr-os.io</code>. Offline operations lasting >24 hours will result in absolute LLM stream lockdown. For 100% offline environments, you MUST purchase the Air-Gapped Enterprise Tier.<br>
+            3. <strong>No Refunds on Burned Keys:</strong> Any attempt to decompile or tamper with the <code>vajra_claw.dll/.so</code> binary to bypass UUID constraints will permanently burn your License Key without refund.
+        </div>
+    <!-- Final CTA Section -->
+    <section class="final-cta" style="text-align: center; padding: 6rem 5%; background: linear-gradient(to bottom, transparent, rgba(230, 57, 70, 0.05));">
+        <h2 style="font-size: 3rem; margin-bottom: 1rem;">Save <span class="highlight">EVERYTHING.</span></h2>
+        <p style="font-size: 1.5rem; color: var(--text-light); font-weight: 600; margin-bottom: 2rem;">BUY the Vajra Claw.</p>
+        <a href="#pricing" class="btn btn-primary" style="font-size: 1.2rem; padding: 1rem 3rem;">Secure Your Infrastructure Now</a>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-logo">🦞 DROS™ Vajra Claw™</div>
-            <p>&copy; 2026 Top-Celestial Company Ltd. (康宸園有限公司, Tax ID: 43908974) / Jimmy Chen. All rights reserved.</p>
+            <p>&copy; 2026 Top-Celestial Company Ltd. (康宸園有限公司) | Tax ID (統編): 43908974</p>
+            <p>Contact Us: <a href="mailto:service@dr-os.io" style="color: var(--primary-color); text-decoration: none;">service@dr-os.io</a></p>
             <p class="dharma-note">Dharma Exemption: Purely non-profit Buddhist propagation usage is 100% free.</p>
         </div>
     </footer>

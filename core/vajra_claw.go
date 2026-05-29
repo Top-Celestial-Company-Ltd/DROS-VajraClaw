@@ -52,6 +52,31 @@ func init_static_vajra(filepath *C.char) C.int {
 	return 1
 }
 
+//export init_static_vajra_from_string
+func init_static_vajra_from_string(contentString *C.char) C.int {
+	content := C.GoString(contentString)
+
+	staticMutex.Lock()
+	defer staticMutex.Unlock()
+
+	// 清空舊陣列
+	staticVajraRules = nil
+
+	lines := strings.Split(content, "\n")
+	for _, line := range lines {
+		line = strings.TrimSpace(line)
+		if len(line) > 0 && !strings.HasPrefix(line, ">") && !strings.HasPrefix(line, "#") {
+			staticVajraRules = append(staticVajraRules, line)
+		}
+	}
+	// 加入絕對禁止詞彙作為防護示範
+	staticVajraRules = append(staticVajraRules, "診斷", "投資", "理財")
+
+	fmt.Println("[VajraClaw-Core] ⚡ 靜態 Vajra 金剛矩陣已從記憶體字串結晶化！常駐記憶體鎖定。")
+	return 1
+}
+
+
 //export inject_ephemeral_rule
 func inject_ephemeral_rule(ruleString *C.char) C.int {
 	rule := C.GoString(ruleString)

@@ -1,0 +1,22 @@
+{
+  "name": "vajraclaw-sdk",
+  "version": "1.0.0",
+  "description": "Node.js FFI bindings for Vajra Claw, the O(1) physical circuit breaker for LLMs.",
+  "main": "claw_adapter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "llm",
+    "security",
+    "prompt-injection",
+    "circuit-breaker",
+    "ffi"
+  ],
+  "author": "Top-Celestial Company Ltd.",
+  "license": "Commercial",
+  "dependencies": {
+    "ffi-napi": "^4.0.3",
+    "ref-napi": "^3.0.3"
+  }
+}

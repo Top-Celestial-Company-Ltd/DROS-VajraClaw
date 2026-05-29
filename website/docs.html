@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation | DROS™ Vajra Claw™</title>
+    <meta name="description" content="Integration Guides and SDK Documentation for Vajra Claw.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .docs-section {
+            padding: 6rem 5%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .docs-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+        }
+        .tab-btn:hover {
+            color: var(--text-light);
+        }
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .docs-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        .docs-card h3 {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .docs-card p {
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .code-block {
+            background: #111116;
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        .code-block .keyword { color: #ff7b72; }
+        .code-block .string { color: #a5d6ff; }
+        .code-block .comment { color: #8b949e; }
+        .code-block .function { color: #d2a8ff; }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo" style="text-decoration: none; color: inherit;">
+            <span class="icon">🦞</span>
+            <span class="brand">DROS™ <span class="highlight">Vajra Claw™</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html#features">Features</a>
+            <a href="docs.html" class="active">Documentation</a>
+            <a href="faq.html">FAQ</a>
+            <a href="index.html#pricing">Pricing</a>
+            <a href="mailto:service@dr-os.io">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Docs Section -->
+    <section class="docs-section">
+        <div class="docs-header">
+            <div class="badge">SDK Integration</div>
+            <h1>Developer <span class="highlight">Ecosystems</span></h1>
+            <p style="color: var(--text-dim); margin-top: 1rem;">Choose your platform to integrate the Vajra Claw C-FFI runtime.</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('python')">Python (LangChain / AutoGPT)</button>
+            <button class="tab-btn" onclick="switchTab('node')">Node.js / TypeScript (VSCode)</button>
+            <button class="tab-btn" onclick="switchTab('go')">Go / C++ (High Performance)</button>
+            <button class="tab-btn" onclick="switchTab('ai')" style="color: #d2a8ff;">✨ Prompt For Your AI</button>
+        </div>
+
+        <!-- Python Tab -->
+        <div id="tab-python" class="tab-content active">
+            <div class="docs-card">
+                <h3>🐍 Python SDK (<code>claw_adapter.py</code>)</h3>
+                <p>The standard integration for Python-based Agentic frameworks like LangChain, OpenClaw, and AutoGPT. It uses the <code>ctypes</code> library to bind directly to the native DLL.</p>
+                
+                <div class="code-block">
+<pre><code><span class="keyword">import</span> ctypes
+<span class="keyword">from</span> adapters.claw_adapter <span class="keyword">import</span> VajraClawAdapter
+
+<span class="comment"># Initialize the C-FFI wrapper and point it to your physical matrix</span>
+claw = VajraClawAdapter(<span class="string">"./vajraclaw_sdk/vajra_claw.dll"</span>, <span class="string">"Vajra.md"</span>)
+
+<span class="comment"># Bind to the LLM Stream</span>
+clean_prompt = claw.intercept_and_inject(user_input)
+<span class="keyword">for</span> chunk <span class="keyword">in</span> llm.stream(clean_prompt):
+    <span class="comment"># Physical check on every token</span>
+    <span class="keyword">if not</span> claw.stream_monitor(chunk):
+        <span class="keyword">raise</span> Exception(<span class="string">"PHYSICAL FUSE BLOWN"</span>)
+    <span class="function">print</span>(chunk)</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Node.js Tab -->
+        <div id="tab-node" class="tab-content">
+            <div class="docs-card">
+                <h3>📦 Node.js / TypeScript SDK (<code>claw_adapter.js</code>)</h3>
+                <p>Designed for VSCode Extension developers (like Continue.dev forks) and JavaScript-based agents. We use <code>ffi-napi</code> to load the C library natively into the V8 engine.</p>
+                
+                <div class="code-block">
+<pre><code><span class="keyword">const</span> { VajraClawAdapter } = <span class="keyword">require</span>(<span class="string">'./vajraclaw_sdk/nodejs/claw_adapter'</span>);
+
+<span class="comment">// Initialize the FFI-NAPI wrapper</span>
+<span class="keyword">const</span> claw = <span class="keyword">new</span> VajraClawAdapter(<span class="string">"./vajraclaw_sdk/vajra_claw.dll"</span>, <span class="string">"Vajra.md"</span>);
+
+<span class="comment">// Async generator for LLM stream interception</span>
+<span class="keyword">async function</span> processStream(llmStream) {
+    <span class="keyword">for await</span> (<span class="keyword">const</span> token <span class="keyword">of</span> llmStream) {
+        <span class="keyword">if</span> (!claw.streamMonitor(token)) {
+            <span class="keyword">throw new</span> Error(<span class="string">"PHYSICAL FUSE BLOWN"</span>);
+        }
+        <span class="function">process.stdout.write</span>(token);
+    }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Go / C++ Tab -->
+        <div id="tab-go" class="tab-content">
+            <div class="docs-card">
+                <h3>⚡ Go & C++ (Native Binding)</h3>
+                <p>For maximum O(1) performance (10k+ TPS) without FFI overhead. Link directly against the <code>.so</code> or <code>.dll</code> using our provided C-Header (<code>vajra_claw.h</code>).</p>
+                
+                <div class="code-block">
+<pre><code><span class="comment">// vajra_claw.h</span>
+<span class="keyword">#ifndef</span> VAJRA_CLAW_H
+<span class="keyword">#define</span> VAJRA_CLAW_H
+
+<span class="keyword">#ifdef</span> __cplusplus
+<span class="keyword">extern</span> <span class="string">"C"</span> {
+<span class="keyword">#endif</span>
+
+<span class="comment">// Load the Matrix into memory (O(1) initialization)</span>
+<span class="keyword">int</span> load_vajra_matrix(<span class="keyword">const char</span>* config_path);
+
+<span class="comment">// Stream evaluator (Returns 0 if fuse blows)</span>
+<span class="keyword">int</span> evaluate_token(<span class="keyword">const char</span>* token);
+
+<span class="keyword">#ifdef</span> __cplusplus
+}
+<span class="keyword">#endif</span>
+
+<span class="keyword">#endif</span></code></pre>
+                </div>
+            </div>
+        </div>
+        <!-- AI Prompt Tab -->
+        <div id="tab-ai" class="tab-content">
+            <div class="docs-card">
+                <h3>🤖 Prompt For Your AI Assistant</h3>
+                <p>Are you using ChatGPT, Claude, or Copilot to help you code? Copy and paste the prompt below into your AI. It will instantly understand VajraClaw's architecture and write the integration code for your specific project.</p>
+                
+                <div class="code-block" style="border-left: 4px solid #d2a8ff;">
+<pre><span class="text">"I want to integrate DROS VajraClaw into my AI Agent codebase. 
+VajraClaw is a C-FFI based physical circuit breaker for LLMs that stops prompt injections and hallucinations at the memory layer in O(1) time.
+
+Here is what you need to know about my system:
+- Language/Framework: [Python/LangChain OR Node.js/VSCode OR Go]
+- LLM Provider: [OpenAI/Anthropic/Local]
+
+Please write the integration code for my system using the VajraClaw SDK. 
+The SDK provides a class `VajraClawAdapter` which takes two arguments on initialization: the path to `vajra_claw.dll/.so` and the path to the constraints matrix `Vajra.md`. 
+The adapter exposes a `stream_monitor(token)` function (or `streamMonitor` in JS). I need you to intercept my LLM's output stream and pass every token through this monitor function. If the monitor returns False, throw a physical fuse blown exception."</span></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">🦞 DROS™ Vajra Claw™</div>
+            <p>&copy; 2026 Top-Celestial Company Ltd. (康宸園有限公司) | Tax ID (統編): 43908974</p>
+            <p>Contact Us: <a href="mailto:service@dr-os.io" style="color: var(--primary-color); text-decoration: none;">service@dr-os.io</a></p>
+            <p class="dharma-note">Dharma Exemption: Purely non-profit Buddhist propagation usage is 100% free.</p>
+        </div>
+    </footer>
+
+    <script>
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById('tab-' + tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

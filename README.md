@@ -87,12 +87,17 @@ To build trust with enterprise CISOs, we are 100% transparent about the physical
 
 ## 💰 Pricing & Licensing (Commercial)
 
-| Tier | Price | Best For | Included |
-| :--- | :--- | :--- | :--- |
-| **Indie / Personal** |  / yr (or  Lifetime) | Solo devs, students, hobbyists | Requires online validation (Heartbeat), Single project, Revenue < |
-| **Startup License** | $499 / yr | Small teams & SaaS MVP | Single Project, Standard Python Adapters, Community Support |
-| **Enterprise Offline License** | $4,990 / yr | High-Security Corporate & Gov | Unlimited Projects, Custom C++/NodeJS Bindings, Priority Email Support |
-| **Source Code Buyout**| Custom | Defense, Medical, Finance | Full Source Code (Go/C), Audit Reports, White-labeling rights |
+We offer flexible licensing tiers tailored for solo creators, growing startups, and ultra-secure enterprise environments.
+
+| Tier | Price | Best For | Licensing Mode | Get Started |
+| :--- | :--- | :--- | :--- | :--- |
+| **Hacker Edition** | **Free** | Developers & Hobbyists | Online validation required, single non-commercial project | [Download Free](https://github.com/marketplace/dros-vajraclaw) |
+| **Startup License** | **$499 / yr** | Small teams & SaaS MVPs | Offline microkernel binary, standard adapters (Python/NodeJS/Kotlin/Swift), community support | [Buy Startup License](https://drosvajra.gumroad.com/l/vajraclaw_startup) |
+| **Enterprise License** | **$4,990 / yr** | High-security corporate & Gov | Strict offline air-gapped runtimes, unlimited projects, custom adapters, priority CISO-level support | [Buy Enterprise License](https://drosvajra.gumroad.com/l/vajraclaw_enterprise) |
+| **Source Code Buyout** | **Custom** | Defense, Medical, and Banking | Full source code ownership (Go/C), multi-language bindings, third-party audit reports | [Contact Sales](https://dr-os.io) |
+
+For details on premium features, dynamic mesh structures, and custom integration, visit the [DROS VajraClaw Official Portal](https://dr-os.io).
+
 
 ---
 **Developed by Top-Celestial Company Ltd. (康宸園有限公司, Tax ID: 43908974) / Jimmy Chen**
