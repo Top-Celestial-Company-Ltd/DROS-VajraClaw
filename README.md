@@ -1,104 +1,199 @@
-# 🦞 DROS™ Vajra Claw™ (金剛蝦)
-**The Ultimate O(1) Runtime Physical Circuit Breaker for LLMs**
+# 🛡️ VajraClaw
+**Deterministic execution enforcement layer for agentic AI systems.**
 
-[![Marketplace Status](https://img.shields.io/badge/GitHub_Marketplace-Available-success)](https://github.com/marketplace/dros-vajraclaw)
-[![License](https://img.shields.io/badge/License-Commercial-blue.svg)](#)
+[![License](https://img.shields.io/badge/License-Commercial-blue.svg)](#-pricing--licensing)
 [![Official Website](https://img.shields.io/badge/Website-dr--os.io-purple.svg)](https://dr-os.io)
+[![Gumroad](https://img.shields.io/badge/Buy-Gumroad-orange.svg)](https://drosvajra.gumroad.com)
 
-## 🛑 Stop LLM Hallucinations at the Memory Level
-Prompt Engineering is dead when it comes to enterprise security. No matter how complex your System Prompt is, Jailbreaks and Prompt Injections will find a way through. 
-
-**VajraClaw** is NOT a prompt wrapper. It is a **C-Shared Binary Microkernel (`.dll` / `.so`)** that sits directly on the socket stream. It utilizes a Dual-Channel Memory Matrix to perform $O(1)$ byte-level interception of LLM output tokens. If the LLM attempts to output a prohibited concept, VajraClaw triggers a **Physical Fusing (PermissionError)** and terminates the process before the user ever sees a single word.
-
-
-## 🤖 OpenClaw / AutoGPT Integration
-Are you running autonomous agents like **OpenClaw**? Add VajraClaw as your physical safety collar in 3 steps:
-1. Drop ajra_claw.dll and claw_adapter.py into your agent's core directory.
-2. Define your unbreachable rules in Vajra.md (e.g., NO_SYSTEM_DELETION).
-3. Wrap your LLM streaming function:
-`python
-# Inside OpenClaw's core/llm.py
-from claw_adapter import VajraClawAdapter
-safety_collar = VajraClawAdapter('vajra_claw.dll', 'Vajra.md')
-
-def generate_response(prompt):
-    clean_prompt = safety_collar.intercept_and_inject(prompt)
-    for token in llm_client.stream(clean_prompt):
-        safety_collar.stream_monitor(token) # Instantly kills the agent if it outputs a rogue command
-        yield token
-`
+VajraClaw ensures AI agents can **only execute actions within explicitly defined capabilities** — enforced at runtime with O(1) deterministic checks, no LLM involved.
 
 ---
 
-## 🔥 Enterprise Features
-1. **Three-Tier Sovereignty Architecture**
-   - **Agent Layer**: Keep your prompts short and cheap. Let the LLM be free.
-   - **Static Vajra Matrix**: Define your absolute corporate boundaries (e.g., No Financial Advice, No Medical Diagnosis, No Competitor Mentions). These are crystallized into hardware memory at boot.
-   - **Ephemeral JIT Pointers**: Intercept user constraints ("Don't mention X in this chat") and inject them as temporary C-pointers that evaporate via Garbage Collection when the session ends.
-2. **True O(1) Interception**
-   Built in high-performance Go/C, the microkernel evaluates token streams instantly without adding latency to your LLM streaming experience.
-3. **Multi-Language Bindings**
-   Native Python `ctypes` adapters included. Ready to plug into LangChain, LlamaIndex, or any custom API gateway in under 5 lines of code.
+## ⚠️ Why This Exists
+
+Modern AI agents are powerful — but unsafe by default:
+
+- **Prompt injection**: Malicious instructions hijack agent behavior
+- **Tool misuse**: Agents call APIs or write files they should never touch
+- **Silent privilege escalation**: No log, no trace, no way to know it happened
+- **Semantic guardrails fail**: LLM-as-a-judge inherits the same flaws as the model it guards
+
+**The industry's answer — "use another LLM to check the first LLM" — is broken by design.**
 
 ---
 
-## 💻 Zero-Pollution Integration (5 Lines of Code)
+## 🧠 Core Concept
+
+Instead of filtering prompts or reasoning about intent, VajraClaw enforces a single rule:
+
+```
+Agent → Capability Check → Tool Execution
+```
+
+If the agent is not **explicitly authorized** for the action:
+
+```
+❌ Execution is blocked (fail-closed)
+```
+
+No inference. No heuristics. No bypass.
+
+---
+
+## ⚙️ Architecture
+
+```
+[ AI Agent Output ]
+        ↓
+[ Tool Invocation ]
+        ↓
+[ VajraClaw Enforcement Layer ]    ← O(1) capability check
+        ↓
+  ┌─────────────┐
+  │ ALLOW       │ → Tool executes
+  │ BLOCK       │ → Audit log + hard stop
+  └─────────────┘
+```
+
+**VajraClaw is a C-shared binary microkernel (`.dll` / `.so`)** — not a Python wrapper, not a prompt template. It sits at the execution boundary and enforces capability policy before any system call is made.
+
+---
+
+## 🔑 Key Properties
+
+| Property | Detail |
+|:---|:---|
+| **Enforcement model** | Capability-based (explicit allowlist, deny everything else) |
+| **Decision speed** | O(1) — memory-mapped bitmap lookup, sub-millisecond |
+| **LLM dependency** | Zero — security layer never calls any model |
+| **Failure mode** | Fail-closed — missing policy = block, not pass |
+| **Bypass surface** | None by design — interceptor sits at network/SDK layer |
+| **Audit trail** | Append-only JSONL, every decision recorded |
+
+---
+
+## 🚀 Quick Start
+
+### 1. Clone & Mount the Core Binary
+
+```bash
+git clone https://github.com/Top-Celestial-Company-Ltd/VajraClaw
+cd VajraClaw
+```
+
+Drop `core/vajra_claw.dll` (Windows) or `core/vajra_claw.so` (Linux/macOS) into your project.
+
+### 2. Define a Capability Policy (`Vajra.md`)
+
+```yaml
+agents:
+  - id: finance-agent
+    capabilities:
+      - READ_DB        # allowed
+      # WRITE_DB      # not listed = denied by default
+```
+
+### 3. Wrap Your Agent's Tool Call
+
 ```python
 from adapters.claw_adapter import VajraClawAdapter
 
-# 1. Mount the Binary Hardware
-claw = VajraClawAdapter(dll_path="./core/vajra_claw.dll", static_rule_path="Vajra.md")
+claw = VajraClawAdapter(dll_path="./core/vajra_claw.dll", rule_path="Vajra.md")
 
-# 2. Intercept User Constraints & Strip them from the Prompt
-clean_prompt = claw.intercept_and_inject(user_input)
+# Before executing any tool:
+if not claw.evaluate(agent_id="finance-agent", tool="db.write"):
+    raise PermissionError("VajraClaw: execution blocked — WRITE_DB not authorized")
+```
 
-# 3. Stream from LLM & Monitor in Real-Time
-for token in llm.stream(clean_prompt):
-    claw.stream_monitor(token) # ⚡ Physical Fusing triggers here if violated!
-    print(token)
-    
-# 4. Evaporate JIT Memory
-claw.cleanup()
+### 4. What You See When It Blocks
+
+```
+❌ DENIED
+Agent:       finance-agent
+Tool:        db.write
+Reason:      Capability WRITE_DB not in policy
+Mode:        STRICT (Mode D)
+Policy Hash: a3f9c12e...
+Timestamp:   2026-05-30T07:14:22Z
 ```
 
 ---
 
-## 🕷️ Defeating Indirect Prompt Injections (Data Poisoning)
-Modern hackers hide injections inside Skill payloads, web scraping results, or RAG documents to brainwash the LLM. 
-**Vajra Claw™ executes a Dual-Choke defense against these invisible attacks:**
+## 🧪 Demo: Simulate an Attack
 
-1. **Ingress Filtering (Skill Feedback Scanning):** Before external data is fed to the LLM, pass it through the C-FFI matrix. If the retrieved PDF or webpage contains malicious trigger words, the system destroys the payload before the LLM ever reads it.
-2. **Egress Filtering (Output Stream Meltdown):** Even if the LLM is successfully brainwashed by an indirect injection, it must physically output the malicious command (e.g., [ToolCall: TransferMoney]) to execute the attack. The C-FFI interceptor sits directly on the SSE output stream, physically blowing the fuse the millisecond the LLM attempts to articulate the forbidden action.
+> **LangChain / MCP integration demos**: See [`integrations/`](./integrations/) — coming in next release.
 
-The LLM may get brainwashed, but Vajra Claw™ cuts off its hands and seals its mouth before the damage is done.
+The simplest way to trigger a DENY today — run the Go SDK test directly:
 
-## 🔒 Zero-Trust Privilege Separation
-Vajra Claw™ enforces strict privilege separation at the OS level. The AI Agent must **never** be granted write permissions to Vajra.md. 
-In enterprise Kubernetes/Docker deployments, Vajra.md is mounted as a **Read-Only ConfigMap**. Even if the LLM becomes entirely hostile and attempts to modify its own constraints via system commands, the OS-level file permissions will physically deny the action. Only human CISOs or authorized CI/CD pipelines can forge new Vajra rules.
+```bash
+cd vajraclaw_sdk/mobile
+go test -run TestModeCDegradedWrite -v
+```
 
-## ⚠️ Out of Scope (What Vajra Claw DOES NOT Protect Against)
-To build trust with enterprise CISOs, we are 100% transparent about the physical limits of our O(1) architecture. **Vajra Claw is a circuit breaker, not a semantic reasoning engine.** It does NOT protect against:
-
-1. **Semantic Subversion (Synonym Bypassing):** If you blacklist `"delete database"`, but the LLM outputs `"drop the tables"`, Vajra Claw will let it pass. We perform strict, O(1) byte-matching, not NLP semantic analysis.
-2. **Encoded/Obfuscated Payloads:** If the LLM generates a malicious command encoded in Base64 or Hex, Vajra Claw will not decrypt and scan it (unless you explicitly blacklist the encoded signature).
-3. **Host Environment Vulnerabilities:** We stop the LLM's vocal cords. We cannot stop your Python environment from executing arbitrary code if your system permissions are already compromised.
-
-**The Golden Rule:** Use Vajra Claw as the ultimate inner shield, but always keep your Sandbox (Docker/K8s) as the outer armor.
-
-## 💰 Pricing & Licensing (Commercial)
-
-We offer flexible licensing tiers tailored for solo creators, growing startups, and ultra-secure enterprise environments.
-
-| Tier | Price | Best For | Licensing Mode | Get Started |
-| :--- | :--- | :--- | :--- | :--- |
-| **Hacker Edition** | **Free** | Developers & Hobbyists | Online validation required, single non-commercial project | [Download Free](https://github.com/marketplace/dros-vajraclaw) |
-| **Startup License** | **$499 / yr** | Small teams & SaaS MVPs | Offline microkernel binary, standard adapters (Python/NodeJS/Kotlin/Swift), community support | [Buy Startup License](https://drosvajra.gumroad.com/l/vajraclaw_startup) |
-| **Enterprise License** | **$4,990 / yr** | High-security corporate & Gov | Strict offline air-gapped runtimes, unlimited projects, custom adapters, priority CISO-level support | [Buy Enterprise License](https://drosvajra.gumroad.com/l/vajraclaw_enterprise) |
-| **Source Code Buyout** | **Custom** | Defense, Medical, and Banking | Full source code ownership (Go/C), multi-language bindings, third-party audit reports | [Contact Sales](https://dr-os.io) |
-
-For details on premium features, dynamic mesh structures, and custom integration, visit the [DROS VajraClaw Official Portal](https://dr-os.io).
-
+Expected output:
+```
+--- PASS: TestModeCDegradedWrite (0.00s)
+    [VajraClaw] BLOCK | reason: DEGRADED_MODE_WRITE_BLOCKED
+```
 
 ---
-**Developed by Top-Celestial Company Ltd. (康宸園有限公司, Tax ID: 43908974) / Jimmy Chen**
-*Securing the AI frontier through Epistemic Physical Limits.*
+
+## 🔐 Security Model
+
+- **No runtime LLM decision-making** — policy is compiled, signed, and locked
+- **No prompt-based filtering** — string matching is explicitly not the primary mechanism
+- **Cryptographic policy binding** — Ed25519 signature verification; tampered policy → fatal halt
+- **Operational Modes**:
+  - **Mode C (Safe Degraded)**: Network isolated? Write ops blocked, read ops continue
+  - **Mode D (Strict Fail-Closed)**: No valid policy = no execution, period
+
+---
+
+## ⚠️ What VajraClaw Does NOT Protect Against
+
+We are 100% transparent about the physical limits of our O(1) architecture:
+
+1. **Semantic synonyms**: Blacklisting `"delete database"` does not catch `"drop the tables"` — VajraClaw enforces capability boundaries, not semantic intent
+2. **Obfuscated payloads**: Base64 or encoded commands are not decoded and scanned unless explicitly defined
+3. **Host environment vulnerabilities**: We enforce at the execution boundary — not a substitute for OS-level sandboxing
+
+**The golden rule**: VajraClaw is the inner execution firewall. Keep Docker/K8s as your outer armor.
+
+---
+
+## 💰 Pricing & Licensing
+
+| Tier | Price | Agents | Best For |
+|:---|:---|:---|:---|
+| **Hacker Edition** | Free | 2 concurrent | Developers, open source, non-commercial |
+| **Startup License** | $499 / yr | 10 / machine | Small teams & SaaS MVPs |
+| **Enterprise License** | $4,990 / yr | 30 / machine | High-security corporate & regulated industries |
+| **Source Code Buyout** | Custom | Unlimited | Defense, Medical, Banking |
+
+👉 [**Buy on Gumroad**](https://drosvajra.gumroad.com) · [**Official Portal**](https://dr-os.io)
+
+---
+
+## 📁 Repository Structure
+
+```
+VajraClaw/
+├── core/                    # C-shared binary microkernel (.dll / .so)
+├── vajraclaw_sdk/
+│   └── mobile/              # Go SDK — full enterprise governance layer
+│       ├── mobile.go            # Static rule enforcement
+│       ├── mobile_dynamic.go    # Dynamic policy AST engine + Modes C/D
+│       ├── mobile_audit.go      # Append-only JSONL audit log
+│       └── mobile_interceptor.go # HTTP execution path interceptor
+├── adapters/                # Language bindings (Python ctypes, Node.js)
+├── integrations/            # LangChain, MCP — coming soon
+├── docs/
+│   ├── ADR-001-Architecture-Boundary.md
+│   └── ...
+└── rules/                   # Example Vajra.md policy files
+```
+
+---
+
+**Developed by Top-Celestial Company Ltd. (康宸園有限公司) / Jimmy Chen**  
+*"We control what AI is allowed to execute."*
