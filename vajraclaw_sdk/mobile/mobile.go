@@ -103,6 +103,9 @@ type AuditTrace struct {
 	MatchedRule    string  `json:"matched_rule"`    // The specific rule that triggered a block
 	PayloadSnippet string  `json:"payload_snippet"` // The intercepted input
 	LatencyMs      float64 `json:"latency_ms"`      // Execution latency in milliseconds
+	PolicyHash     string  `json:"policy_hash,omitempty"`
+	CompilerVersion string `json:"compiler_version,omitempty"`
+	DslVersion     int     `json:"dsl_version,omitempty"`
 }
 
 // generateUUID generates a simple, dependency-free pseudo-UUID v4 using crypto/rand

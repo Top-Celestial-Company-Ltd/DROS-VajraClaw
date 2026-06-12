@@ -1,0 +1,13 @@
+epoch: "v2-financial-safeguards"
+allowed_tools:
+  - db.read
+  - file.read
+  - web.search
+tool_policies:
+  - tool_name: "execute_payment"
+    action: "BLOCK"
+    is_write_action: true
+    conditions:
+      - field: "amount"
+        operator: ">"
+        value: 5000.0

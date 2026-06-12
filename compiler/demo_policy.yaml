@@ -1,0 +1,57 @@
+vajra_version: 1
+namespace: dr-os
+epoch: 2026-05-31T09:00:00Z
+
+agents:
+  - id: maintenance-agent
+    role: maintenance
+  - id: customer_service
+    role: support
+  - id: orphan_agent
+    role: unknown
+
+tools:
+  - name: db.query
+    requires: [READ_DB]
+  - name: file.write
+    requires: [WRITE_FILE]
+  - name: sys.reboot
+    requires: [ROOT_PRIVILEGE]
+  - name: admin.create_user
+    requires: [ADMIN_CRM]
+  - name: admin.delete_user
+    requires: [ADMIN_CRM]
+  - name: crm.read.profile
+    requires: [READ_CRM]
+  - name: crm.read.billing
+    requires: [READ_CRM, BILLING_ACCESS]
+  - name: crm.delete.profile
+    requires: [ADMIN_CRM]
+
+capabilities:
+  maintenance-agent:
+    - READ_DB
+    - READ_LOGS # INFO: Unused
+  customer_service:
+    - READ_CRM
+
+rules:
+  - match:
+      agent: customer_service
+      tool: crm.read.*
+    effect: ALLOW
+    
+  - match:
+      agent: customer_service
+      tool: crm.delete.*
+    effect: DENY
+
+  - match:
+      agent: maintenance-agent
+      tool: admin.*
+    effect: ALLOW
+
+  - match:
+      agent: maintenance-agent
+      tool: invalid.tool.* # WARN: Matches nothing
+    effect: ALLOW

@@ -62,7 +62,7 @@ func (vrt *VajraClawRoundTripper) RoundTrip(req *http.Request) (*http.Response, 
 			}
 
 			// Perform actual VajraClaw evaluation
-			auditTraceJSON := EvaluateDynamicToolCallWithAudit(toolName, bodyStr, vrt.AgentID)
+			auditTraceJSON := EvaluateDynamicToolCallWithAudit(toolName, bodyStr, vrt.AgentID, "")
 			
 			// If the audit trace indicates a BLOCK, we physically sever the connection here.
 			if strings.Contains(auditTraceJSON, `"status":"BLOCK"`) {

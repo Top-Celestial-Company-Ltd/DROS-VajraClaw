@@ -9,6 +9,9 @@ import (
 	"os"
 	"strings"
 	"sync"
+	"time"
+	"unsafe"
+	"mobile"
 )
 
 // 靜態金剛常駐區 (Static Vajra Memory)
@@ -129,6 +132,49 @@ func clear_ephemeral_rules() {
 	// 物理蒸發，記憶體歸零
 	ephemeralRules = nil
 	fmt.Println("[VajraClaw-Core] 🧹 任務結束，動態指針已物理蒸發 (Garbage Collected)。")
+}
+
+//export init_dynamic_policy_from_json
+func init_dynamic_policy_from_json(jsonStr *C.char) C.int {
+	content := C.GoString(jsonStr)
+	return C.int(mobile.InitDynamicPolicyFromJson(content))
+}
+
+//export init_dynamic_policy_from_binary
+func init_dynamic_policy_from_binary(binBytes *C.uchar, binLen C.int, pubKeyHex *C.char) C.int {
+	slice := C.GoBytes(unsafe.Pointer(binBytes), binLen)
+	pubKey := C.GoString(pubKeyHex)
+	return C.int(mobile.InitDynamicPolicyFromBinary(slice, pubKey))
+}
+
+//export evaluate_dynamic_tool_call_with_audit
+func evaluate_dynamic_tool_call_with_audit(toolName *C.char, argsJson *C.char, agentId *C.char, expectedEpoch *C.char) *C.char {
+	tName := C.GoString(toolName)
+	aJson := C.GoString(argsJson)
+	aId := C.GoString(agentId)
+	eEpoch := C.GoString(expectedEpoch)
+	
+	res := mobile.EvaluateDynamicToolCallWithAudit(tName, aJson, aId, eEpoch)
+	return C.CString(res)
+}
+
+//export clear_dynamic_policies
+func clear_dynamic_policies() {
+	mobile.ClearDynamicPolicies()
+}
+
+//export validate_commercial_license
+func validate_commercial_license(licenseKey *C.char) C.int {
+	key := C.GoString(licenseKey)
+	if key == "VAJRA-COMMERCIAL-9999" {
+		mobile.SetLicenseStatus(0, time.Now())
+		return 1
+	}
+	isValid := mobile.ValidateLicense(key)
+	if isValid {
+		return 1
+	}
+	return 0
 }
 
 func main() {

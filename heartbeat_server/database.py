@@ -14,6 +14,22 @@ DB_NAME = os.getenv("DB_NAME", "top_db")
 
 logger = logging.getLogger("uvicorn.error")
 
+def init_db():
+    connection = get_db_connection()
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS Vajraclaw試用表T (
+                    MachineID VARCHAR(255) PRIMARY KEY,
+                    TrialStartDate DATETIME NOT NULL
+                )
+            """)
+        connection.commit()
+    except Exception as e:
+        logger.error(f"資料庫初始化失敗: {e}")
+    finally:
+        connection.close()
+
 def get_db_connection():
     """建立並回傳 MariaDB 連線。每次請求都建立新連線以確保無狀態。"""
     try:
@@ -38,6 +54,32 @@ def verify_license(license_key: str, machine_uuid: str) -> dict:
     connection = get_db_connection()
     try:
         with connection.cursor() as cursor:
+            if license_key == "TRIAL" or license_key == "":
+                # 處理自動 30 天試用期
+                cursor.execute("SELECT TrialStartDate FROM Vajraclaw試用表T WHERE MachineID = %s", (machine_uuid,))
+                result = cursor.fetchone()
+                
+                if not result:
+                    # 首次使用，自動註冊 30 天試用
+                    cursor.execute("INSERT INTO Vajraclaw試用表T (MachineID, TrialStartDate) VALUES (%s, NOW())", (machine_uuid,))
+                    connection.commit()
+                    cursor.execute("SELECT TrialStartDate FROM Vajraclaw試用表T WHERE MachineID = %s", (machine_uuid,))
+                    result = cursor.fetchone()
+                
+                start_date = result['TrialStartDate']
+                # 取得 UNIX Timestamp 以計算 30 天後
+                import datetime
+                # 若 30 天已過，拒絕授權
+                expires_date = start_date + datetime.timedelta(days=30)
+                if datetime.datetime.now() > expires_date:
+                    return {"is_valid": False, "reason": "Trial expired. Please purchase an Enterprise License."}
+                
+                return {
+                    "is_valid": True,
+                    "tier": "Trial",
+                    "expires_at": int(expires_date.timestamp())
+                }
+
             # 使用我們定義的 Vajraclaw授權表T 結構
             sql = "SELECT * FROM Vajraclaw授權表T WHERE 授權碼 = %s"
             cursor.execute(sql, (license_key,))

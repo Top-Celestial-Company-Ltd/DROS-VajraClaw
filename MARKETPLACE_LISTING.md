@@ -1,81 +1,77 @@
-# 🦞 DROS™ Vajra Claw™ (金剛蝦)
-**The Ultimate O(1) Runtime Physical Circuit Breaker for LLMs**
+# 🛡️ DROS™ (Deterministic Runtime Operating System)
+**The Execution Governance Standard for Agentic AI**
 
-[![Marketplace Status](https://img.shields.io/badge/GitHub_Marketplace-Available-success)](https://github.com/marketplace/dros-vajraclaw)
+[![Marketplace Status](https://img.shields.io/badge/GitHub_Marketplace-Available-success)](https://github.com/marketplace/dros-engine)
 [![License](https://img.shields.io/badge/License-Commercial-blue.svg)](#)
 [![Official Website](https://img.shields.io/badge/Website-dr--os.io-purple.svg)](https://dr-os.io)
 
-## 🛑 Stop LLM Hallucinations at the Memory Level
-Prompt Engineering is dead when it comes to enterprise security. No matter how complex your System Prompt is, Jailbreaks and Prompt Injections will find a way through. 
+## 🛑 "If runtime needs intelligence, the system is already broken."
+Prompt Engineering is dead when it comes to enterprise security. No matter how complex your System Prompt is, Jailbreaks and Prompt Injections will find a way through. API Gateways fail because they assume human-driven execution constraints apply to agents.
 
-**VajraClaw** is NOT a prompt wrapper. It is a **C-Shared Binary Microkernel (`.dll` / `.so`)** that sits directly on the socket stream. It utilizes a Dual-Channel Memory Matrix to perform $O(1)$ byte-level interception of LLM output tokens. If the LLM attempts to output a prohibited concept, VajraClaw triggers a **Physical Fusing (PermissionError)** and terminates the process before the user ever sees a single word.
-
----
-
-## 🔥 Enterprise Features
-1. **Three-Tier Sovereignty Architecture**
-   - **Agent Layer**: Keep your prompts short and cheap. Let the LLM be free.
-   - **Static Vajra Matrix**: Define your absolute corporate boundaries (e.g., No Financial Advice, No Medical Diagnosis, No Competitor Mentions). These are crystallized into hardware memory at boot.
-   - **Ephemeral JIT Pointers**: Intercept user constraints ("Don't mention X in this chat") and inject them as temporary C-pointers that evaporate via Garbage Collection when the session ends.
-2. **True O(1) Interception**
-   Built in high-performance Go/C, the microkernel evaluates token streams instantly without adding latency to your LLM streaming experience.
-3. **Multi-Language Bindings**
-   Native Python `ctypes` adapters included. Ready to plug into LangChain, LlamaIndex, or any custom API gateway in under 5 lines of code.
+**DROS** is NOT a prompt wrapper. It is the **Execution Governance Standard**. We move intelligence to compile-time (Vajra.md) and enforce rules via an **O(1) Bitmap Runtime Engine** (`.dll` / `.so` / `.aar`). If the Agent attempts an unauthorized action, DROS triggers a **Physical Fusing (Strict Fail-Closed)** and terminates the process in under 1 millisecond.
 
 ---
 
-## 💻 Zero-Pollution Integration (5 Lines of Code)
+## 🔥 Enterprise Product Lines (V3 Ecosystem)
+
+### 1. DROS Free-Trial (PLG Edition)
+- **Zero-Friction Adoption**: Download the binary and experience O(1) interception in 3 minutes.
+- **Offline Timebomb**: 30-day RSA signed license. No need to connect to our servers to validate.
+- **Limit**: 2 Concurrent Agents (Hardcoded at compile time).
+
+### 2. DROS Engine (Core Runtime)
+- **Compile-Time Intelligence**: Write policies in `Vajra.md`, compile them into deterministic Bitmaps.
+- **O(1) Execution**: Pure bitwise AND operations. Zero JSON parsing at runtime. Zero TOCTOU vulnerabilities.
+- **Multi-Language SDKs**: Native Python `vajraclaw` module included. Wrap LangChain/AutoGen tools in 1 line of code.
+
+### 3. DROS Engine+ (Enterprise Audit)
+- **Cryptographic Audit**: `SHA-256 Policy Hash` and `Compiler Version` are bound to every audit trace. Prove to your CISO exactly *why* an agent made a decision.
+- **Sealed Binary Policy**: Ed25519 signatures prevent tampering.
+- **Policy Epoch Lock**: Prevent downgrade attacks in distributed microservices.
+
+### 4. VajraAgent (Control Plane)
+- **Centralized Dashboard**: Push policy updates via Mesh OTA to hundreds of DROS Engine nodes instantly.
+- **MCP Reverse Proxy**: Zero-code integration. Point your agent to VajraAgent, get global governance.
+- **Emergency Kill-Switch**: Broadcast a block command to all nodes worldwide in seconds.
+
+### 5. DROS Mobile SDK (Zero-Trust Endpoint)
+- **Gomobile Android AAR**: O(1) engine compiled natively for mobile edge devices.
+- **Offline Safe Degraded (Mode C)**: If the phone is offline, automatically downgrade to a Read-Only sandbox. Block all write actions (e.g., transfers) while keeping read queries functional.
+
+---
+
+## 💻 Zero-Pollution Integration (Python Example)
 ```python
-from adapters.claw_adapter import VajraClawAdapter
+from vajraclaw import VajraClaw
 
-# 1. Mount the Binary Hardware
-claw = VajraClawAdapter(dll_path="./core/vajra_claw.dll", static_rule_path="Vajra.md")
+# 1. Mount the Signed Binary Policy
+vc = VajraClaw("policy.bin")
 
-# 2. Intercept User Constraints & Strip them from the Prompt
-clean_prompt = claw.intercept_and_inject(user_input)
+# 2. Evaluate the Tool Call in O(1) Time
+decision = vc.evaluate("customer_service", "admin.delete_user")
 
-# 3. Stream from LLM & Monitor in Real-Time
-for token in llm.stream(clean_prompt):
-    claw.stream_monitor(token) # ⚡ Physical Fusing triggers here if violated!
-    print(token)
-    
-# 4. Evaporate JIT Memory
-claw.cleanup()
+# 3. Deterministic Enforcement
+if decision == "BLOCK":
+    raise PermissionError("Action blocked by DROS Execution Kernel.")
 ```
 
 ---
 
-## 🕷️ Defeating Indirect Prompt Injections (Data Poisoning)
-Modern hackers hide injections inside Skill payloads, web scraping results, or RAG documents to brainwash the LLM. 
-**Vajra Claw™ executes a Dual-Choke defense against these invisible attacks:**
-
-1. **Ingress Filtering (Skill Feedback Scanning):** Before external data is fed to the LLM, pass it through the C-FFI matrix. If the retrieved PDF or webpage contains malicious trigger words, the system destroys the payload before the LLM ever reads it.
-2. **Egress Filtering (Output Stream Meltdown):** Even if the LLM is successfully brainwashed by an indirect injection, it must physically output the malicious command (e.g., [ToolCall: TransferMoney]) to execute the attack. The C-FFI interceptor sits directly on the SSE output stream, physically blowing the fuse the millisecond the LLM attempts to articulate the forbidden action.
-
-The LLM may get brainwashed, but Vajra Claw™ cuts off its hands and seals its mouth before the damage is done.
-
 ## 🔒 Zero-Trust Privilege Separation
-Vajra Claw™ enforces strict privilege separation at the OS level. The AI Agent must **never** be granted write permissions to Vajra.md. 
-In enterprise Kubernetes/Docker deployments, Vajra.md is mounted as a **Read-Only ConfigMap**. Even if the LLM becomes entirely hostile and attempts to modify its own constraints via system commands, the OS-level file permissions will physically deny the action. Only human CISOs or authorized CI/CD pipelines can forge new Vajra rules.
+DROS enforces strict privilege separation at the OS level. The AI Agent must **never** be granted write permissions to `policy.bin`. In enterprise Kubernetes/Docker deployments, the policy is mounted as a **Read-Only ConfigMap**. Even if the LLM becomes entirely hostile, OS-level file permissions will physically deny tampering.
 
-## ⚠️ Out of Scope (What Vajra Claw DOES NOT Protect Against)
-To build trust with enterprise CISOs, we are 100% transparent about the physical limits of our O(1) architecture. **Vajra Claw is a circuit breaker, not a semantic reasoning engine.** It does NOT protect against:
-
-1. **Semantic Subversion (Synonym Bypassing):** If you blacklist `"delete database"`, but the LLM outputs `"drop the tables"`, Vajra Claw will let it pass. We perform strict, O(1) byte-matching, not NLP semantic analysis.
-2. **Encoded/Obfuscated Payloads:** If the LLM generates a malicious command encoded in Base64 or Hex, Vajra Claw will not decrypt and scan it (unless you explicitly blacklist the encoded signature).
-3. **Host Environment Vulnerabilities:** We stop the LLM's vocal cords. We cannot stop your Python environment from executing arbitrary code if your system permissions are already compromised.
-
-**The Golden Rule:** Use Vajra Claw as the ultimate inner shield, but always keep your Sandbox (Docker/K8s) as the outer armor.
+---
 
 ## 💰 Pricing & Licensing (Commercial)
 
 | Tier | Price | Best For | Included |
 | :--- | :--- | :--- | :--- |
-| **Indie / Personal** |  / yr (or  Lifetime) | Solo devs, students, hobbyists | Requires online validation (Heartbeat), Single project, Revenue < |
-| **Startup License** | $499 / yr | Small teams & SaaS MVP | Single Project, Standard Python Adapters, Community Support |
-| **Enterprise Offline License** | $4,990 / yr | High-Security Corporate & Gov | Unlimited Projects, Custom C++/NodeJS Bindings, Priority Email Support |
-| **Source Code Buyout**| Custom | Defense, Medical, Finance | Full Source Code (Go/C), Audit Reports, White-labeling rights |
+| **Free Trial** | $0 | Solo devs, PoC | 30-day Offline RSA Timebomb, Max 2 Agents |
+| **Startup License** | $499 / yr | Small teams & SaaS MVP | DROS Engine, Python SDK, Community Support |
+| **Enterprise Audit** | $4,990 / yr | High-Security Corporate (FinTech) | DROS Engine+, Cryptographic Audit, Ed25519 Signatures |
+| **VajraAgent Mesh**| Custom | Enterprise Deployments | Control Plane, MCP Proxy, Global OTA Updates |
+| **Source Code Buyout**| Custom | Defense, Medical | Full Source Code (Go/Zig), Audit Reports, White-labeling rights |
 
 ---
-**Developed by Top-Celestial Company Ltd. (康宸園有限公司, Tax ID: 43908974) / Jimmy Chen**
-*Securing the AI frontier through Epistemic Physical Limits.*
+**Developed by DROS Labs / 康宸園有限公司 / Jimmy Chen**
+*Securing the autonomous frontier through Deterministic Execution.*

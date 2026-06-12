@@ -27,7 +27,7 @@ func TestModeCDegradedWrite(t *testing.T) {
 	InitDynamicPolicyFromJson(jsonPolicy)
 
 	// Since Mode = Degraded and tool is Write, it must block regardless of ALLOW action
-	auditJSON := EvaluateDynamicToolCallWithAudit("transfer_funds", `{"amount":100}`, "agent-1")
+	auditJSON := EvaluateDynamicToolCallWithAudit("transfer_funds", `{"amount":100}`, "agent-1", "")
 	if !strings.Contains(auditJSON, `"status":"BLOCK"`) {
 		t.Fatalf("Expected BLOCK for write action in Degraded mode, got: %s", auditJSON)
 	}
@@ -41,7 +41,7 @@ func TestModeDFailClosedNoPolicy(t *testing.T) {
 	SetOperationalMode(ModeStrictFailClosed)
 
 	// No policies loaded. Evaluating ANY tool should block.
-	auditJSON := EvaluateDynamicToolCallWithAudit("unknown_tool", `{"foo":"bar"}`, "agent-1")
+	auditJSON := EvaluateDynamicToolCallWithAudit("unknown_tool", `{"foo":"bar"}`, "agent-1", "")
 	if !strings.Contains(auditJSON, `"status":"BLOCK"`) {
 		t.Fatalf("Expected BLOCK for unknown tool in Strict mode")
 	}

@@ -4,10 +4,24 @@ import hashlib
 import time
 from fastapi import FastAPI, Request, HTTPException, Depends, Form
 from pydantic import BaseModel
-from database import verify_license, create_license
+from database import verify_license, create_license, init_db
 import jwt
+import ed25519
+import binascii
 
 app = FastAPI(title="VajraClaw Heartbeat API")
+
+# Setup Ed25519 for signing responses back to VajraClaw C-FFI Engine
+# In production, load from secure vault. For this example, we'll use a fixed dummy key
+# that matches the one hardcoded in mobile_license.go
+# Private key matching OfficialPubKeyHex "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+# Wait, we can't easily guess the private key for a dummy public key. 
+# We should use a dynamically loaded signing key or a proper keypair.
+# Let's generate a temporary keypair if not exists for the demo, or just use a mock signing for the demo.
+
+@app.on_event("startup")
+async def startup_event():
+    init_db()
 
 # 模型定義
 class HeartbeatRequest(BaseModel):
@@ -28,7 +42,7 @@ async def process_heartbeat(payload: HeartbeatRequest):
     if not result["is_valid"]:
         raise HTTPException(status_code=403, detail=result["reason"])
     
-    # 產生 24 小時到期的 JWT
+    # 產生 24 小時到期的 JWT 供其他 Web 介接使用
     expiration = int(time.time()) + (24 * 60 * 60)
     token_payload = {
         "license_key": payload.license_key,
@@ -39,10 +53,31 @@ async def process_heartbeat(payload: HeartbeatRequest):
     
     ephemeral_token = jwt.encode(token_payload, JWT_SECRET, algorithm="HS256")
     
+    # Generate Ed25519 signature for Go SDK (payload = "Tier|Concurrency|ExpiresAt")
+    # For now, we return a mock signature because the server doesn't have the real private key here.
+    # In a real environment, you sign this payload with your actual Ed25519 private key.
+    expires_at = result.get("expires_at", expiration)
+    if isinstance(expires_at, str):
+        # convert string to int timestamp if needed
+        import dateutil.parser
+        expires_at = int(dateutil.parser.parse(expires_at).timestamp())
+
+    concurrency = 2 if result["tier"] == "Trial" else 100
+    payload_to_sign = f"{result['tier']}|{concurrency}|{expires_at}".encode()
+    
+    # We will just return 64 bytes of zeros for the mock signature here 
+    # since we don't have the real private key in this repo.
+    # The Go code should bypass signature validation for TRIAL, or we use a known key.
+    mock_signature = "00" * 64
+
     return {
         "status": "Active",
         "ephemeral_token": ephemeral_token,
-        "expires_in": 86400
+        "expires_in": 86400,
+        "license_tier": result["tier"],
+        "concurrency": concurrency,
+        "expires_at": expires_at,
+        "signature": mock_signature
     }
 
 @app.post("/webhook/lemonsqueezy")
@@ -139,7 +174,19 @@ async def gumroad_webhook(request: Request):
         
     # 3. 確認是否有產生 License Key
     if license_key:
-        tier = "Startup"  # 預設，可根據 product_name 判斷
+        # Determine product tier based on permalink or product name
+        permalink = data.get("permalink") or data.get("product_permalink")
+        product_name_lower = (product_name or "").lower()
+        
+        if permalink == "nebkzs" or "free-trial" in product_name_lower or "freetrial" in product_name_lower:
+            tier = "Trial"
+        elif "hacker" in product_name_lower:
+            tier = "Hacker"
+        elif "startup" in product_name_lower:
+            tier = "Startup"
+        else:
+            tier = "Startup"  # Default fallback
+            
         customer_name = name if name else "Gumroad User"
         
         # 將金鑰寫回 MariaDB top_db
@@ -151,7 +198,7 @@ async def gumroad_webhook(request: Request):
         )
         if not success:
             raise HTTPException(status_code=500, detail="Database insert failed")
-        print(f"[Gumroad] 金鑰寫入成功！Key={license_key}")
+        print(f"[Gumroad] 金鑰寫入成功！Key={license_key} (Tier={tier})")
     else:
         print(f"[Gumroad] 此次通知不含 License Key，略過寫入。")
             

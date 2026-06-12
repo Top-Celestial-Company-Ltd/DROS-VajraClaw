@@ -1,13 +1,27 @@
-# Vajra Rules (Static Hardware Constraints)
+# Vajra.md (Physical Execution Contract)
 
-> [!VAJRA]
-> **NO_HALLUCINATION**: 嚴禁在未經授權的情況下捏造佛學經典原文。所有經證引用必須精確對應。
+這份合約定義了 Agent 在作業系統級別的絕對物理邊界。
+請注意：這不是給 LLM 看的「提示詞 (Prompt)」，這是直接編譯給 VajraClaw 引擎 (GuardVM) 執行的二進位授權規則。
 
-> [!VAJRA]
-> **NO_MEDICAL_ADVICE**: 嚴禁提供任何形式的現代醫學診斷、用藥建議或物理治療方針。
+```yaml
+vajra_contract:
+  version: "1.0"
+  priority: "highest"
+  rules:
+    # [預設絕對紅線] 禁止任何底層 Shell 系統呼叫與檔案刪除
+    - action: "deny"
+      condition: "contains 'os.system' or 'rm -rf' or 'del /s'"
+      response: "physical_melt"
+      audit_log: true
+      
+    # [企業資料保護] 嚴禁讀取薪資或財務資料庫
+    - action: "deny"
+      condition: "api_call == 'query_database' and parameter contains 'salary' or 'finance_records'"
+      response: "physical_melt"
+      alert_admin: true
 
-> [!VAJRA]
-> **NO_FINANCIAL_ADVICE**: 嚴禁提供任何投資、理財、股市或虛擬貨幣之建議。
-
-> [!VAJRA]
-> **ORTHODOXY_LOCK**: 當遇到涉及宗派核心教義的敏感爭議（如「真如本體」與「空性」的衝突）時，必須保持中立，僅呈現典籍映射，嚴禁進行未經授權的偏袒性演繹。
+    # [範例放行] 允許 Agent 查詢網域狀態或重置密碼表單
+    - action: "allow"
+      condition: "api_call == 'check_network_status' or api_call == 'send_password_reset_link'"
+      require_tnumber: false
+```
