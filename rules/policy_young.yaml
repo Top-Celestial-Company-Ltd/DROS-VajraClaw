@@ -1,0 +1,50 @@
+# DROS Execution Contract — \\YOUNG NAS Protection Policy
+# 定義 PC 訪問 \\YOUNG NAS 的安全性合約
+
+vajra_version: 1
+epoch: "2026-Q3-YOUNG-NAS-Safeguards"
+
+# ─── 靜態授權 Bitmap 定義 ────────────────────────────────
+agents:
+  - id: authorized-backup-agent
+    role: system_backup
+  - id: normal-developer-agent
+    role: developer
+  - id: untrusted-agent
+    role: unknown
+
+capabilities:
+  authorized-backup-agent:
+    - READ_NAS
+    - WRITE_NAS
+  normal-developer-agent:
+    - READ_NAS
+
+tools:
+  - name: nas.read
+    requires:
+      - READ_NAS
+  - name: nas.write
+    requires:
+      - WRITE_NAS
+
+rules:
+  # 拒絕普通開發進程與未授權進程寫入 NAS
+  - match:
+      agent: normal-developer-agent
+      tool: nas.write
+    effect: DENY
+  - match:
+      agent: untrusted-agent
+      tool: nas.*
+    effect: DENY
+
+# ─── V2 DCT 動態前綴資源規則 ──────────────────────────────────
+# 物理邊界保護：任何對 \\YOUNG 網路路徑的存取都必須進行前綴匹配審查
+resources:
+  - prefix: \\YOUNG\
+    effect: ALLOW
+  - prefix: \\YOUNG\shared\
+    effect: ALLOW
+  - prefix: \\YOUNG\private\
+    effect: DENY # 即使在同個路徑下，機密目錄也預設硬性拒絕 (DENY)

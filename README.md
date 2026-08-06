@@ -29,18 +29,36 @@ DROS shifts intelligence to **compile-time** and enforces rules via an **O(1) de
 ### Strict Fail-Closed Guarantee
 DROS operates on a Zero-Trust basis. If an Agent attempts an unauthorized action, if the Ed25519 signature doesn't match, or if the Policy Hash is corrupted, DROS physically severs the execution path at the OS level (Panic). It will rather crash the application than let an unverified payload touch your database.
 
-## 3. The 5 Ecosystem Pillars (V3)
+## 4. The 6-Pillars Enterprise AI Trust Model (DROS-6P)
 
-DROS provides a complete ecosystem for Enterprise Agentic AI:
+DROS-VajraClaw enforces six fundamental trust boundaries in real time at the C-ABI / FFI in-band execution layer:
 
-1.  **DROS Free-Trial**: PLG Hacker edition with 30-day RSA Timebomb and 2 Concurrent Agent limit.
-2.  **DROS Engine**: The core O(1) Bitmap Execution Engine with Python/Go bindings.
-3.  **DROS Engine+ (Enterprise Audit)**: Adds Cryptographic Audit Tracing (Policy Hash binding) and Policy Epoch Locking.
-4.  **VajraAgent (Control Plane)**: Mesh OTA policy distribution and MCP Reverse Proxy for global governance.
-5.  **DROS Mobile SDK**: Gomobile compiled AAR/XCFramework for Zero-Trust Edge execution with offline Safe Degraded mode.
+1. **Principal (Identity)**: 3-tier PKI-signed `DrosIdentityToken (DIT)` for unbypassable agent identity binding.
+2. **Authorization (Deterministic)**: Immutable $O(1)$ capability bitmaps mapping roles to execution vectors.
+3. **Action Bound (Syscall Gate)**: Sub-microsecond (<500ns) binary interception enforcing hard physical limits.
+4. **Policy Gate (Dynamic Control)**: Dynamic data redaction, Human-In-The-Loop (HITL), and ZKP-Lite zero-knowledge proofs.
+5. **Audit Log (Non-repudiability)**: SHA-256 Merkle Hash Chain + Ed25519 signatures, fully compliant with EU AI Act Art. 12.
+6. **Expiry / Revocation (Microsecond)**: Constant-time $O(1)$ dynamic bitmap updates for microsecond-level revocation and instant HTTP 403 enforcement.
+
+---
+
+## 📜 Technical Whitepapers & Academic DOI Citations
+
+### 📚 Peer-Reviewed Zenodo Citations
+* 🏛️ **DROS 4-Layer Defense-in-Depth Architecture for Autonomous AI Workloads**
+  * **DOI**: [`10.5281/zenodo.21755654`](https://doi.org/10.5281/zenodo.21755654) | **Zenodo Record**: [zenodo.org/records/21755654](https://zenodo.org/records/21755654)
+* 🏛️ **DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents**
+  * **DOI**: [`10.5281/zenodo.21808499`](https://doi.org/10.5281/zenodo.21808499) | **Zenodo Record**: [zenodo.org/records/21808499](https://zenodo.org/records/21808499)
+
+### 📖 Full Technical Whitepapers
+* 📖 **[Full Whitepaper (English v2.5)](docs/DROS_AgenticWeb_Defense_Whitepaper_EN.md)**: *Zero-Trust Execution Governance for Autonomous AI Workloads (DROS 4-Layer & 6P Model)*
+* 📖 **[完整技術白皮書 (繁體中文 v2.5)](docs/DROS_AgenticWeb_Defense_Whitepaper_CN.md)**: *自主型 AI 工作負載的零信任執行治理 (DROS 四層防禦縱深與 6P 模型)*
+* 🏛️ **[Defensive Publication & Prior Art Declaration](docs/DEFENSIVE_PUBLICATION.md)**: *Prior Art declaration establishing DROS Compile-time & O(1) Bitmap governance*
 
 ---
 
 > **"Linux defined how machines run software. DROS defines how agents are allowed to act."**
 
-*Developed by DROS Labs / 康宸園有限公司*
+*Developed by DROS Labs / 康宸園有限公司 (Top-Celestial Company Ltd.)*
+*Protected under U.S. Provisional Patent Application No. 64/111,973 (Patent Pending).*
+

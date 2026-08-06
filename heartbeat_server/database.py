@@ -72,8 +72,8 @@ def verify_license(license_key: str, machine_uuid: str) -> dict:
                 # 若 30 天已過，拒絕授權
                 expires_date = start_date + datetime.timedelta(days=30)
                 if datetime.datetime.now() > expires_date:
-                    return {"is_valid": False, "reason": "Trial expired. Please purchase an Enterprise License."}
-                
+                    return {"is_valid": False, "reason": "Trial period (30 days) has expired. Please purchase a Hacker or higher license at https://dr-os.io/pricing"}
+
                 return {
                     "is_valid": True,
                     "tier": "Trial",

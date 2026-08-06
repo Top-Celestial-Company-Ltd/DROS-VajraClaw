@@ -62,9 +62,18 @@ async def process_heartbeat(payload: HeartbeatRequest):
         import dateutil.parser
         expires_at = int(dateutil.parser.parse(expires_at).timestamp())
 
-    concurrency = 2 if result["tier"] == "Trial" else 100
-    payload_to_sign = f"{result['tier']}|{concurrency}|{expires_at}".encode()
-    
+    # ── Tier → Concurrency 映射表（必須與 Gumroad 商品規格完全一致）──
+    TIER_CONCURRENCY = {
+        "Trial":      2,    # Free Trial: 1 UUID / 2 Agents / 30 天
+        "Hacker":     5,    # Hacker: 1 UUID / 5 Agents / 年訂閱
+        "Startup":    30,   # Startup: 3 UUIDs / 每機 10 / 共 30 Agents
+        "Enterprise": 450,  # Enterprise: 15 UUIDs / 每機 30 / 共 450 Agents
+        "Sovereign":  9999, # Sovereign: 無限制 (用 9999 作為極大值代表)
+    }
+    tier = result["tier"]
+    concurrency = TIER_CONCURRENCY.get(tier, 2)  # 未知 tier 預設最保守的 2
+    payload_to_sign = f"{tier}|{concurrency}|{expires_at}".encode()
+
     # We will just return 64 bytes of zeros for the mock signature here 
     # since we don't have the real private key in this repo.
     # The Go code should bypass signature validation for TRIAL, or we use a known key.
@@ -178,14 +187,28 @@ async def gumroad_webhook(request: Request):
         permalink = data.get("permalink") or data.get("product_permalink")
         product_name_lower = (product_name or "").lower()
         
-        if permalink == "nebkzs" or "free-trial" in product_name_lower or "freetrial" in product_name_lower:
-            tier = "Trial"
-        elif "hacker" in product_name_lower:
-            tier = "Hacker"
-        elif "startup" in product_name_lower:
-            tier = "Startup"
-        else:
-            tier = "Startup"  # Default fallback
+        # ── Gumroad Permalink → Tier 對應（必須與 Gumroad 後台 permalink 完全一致）──
+        PERMALINK_TIER = {
+            "nebkzs":           "Trial",      # Free Trial
+            "vajraclaw_hacker": "Hacker",     # Hacker
+            "vajraclaw_startup": "Startup",   # Startup
+            "vajraclaw_enterprise": "Enterprise",  # Enterprise
+        }
+        tier = PERMALINK_TIER.get(permalink)
+        if not tier:
+            # Permalink 不符時，從 product_name 模糊比對（容錯備援）
+            if "free-trial" in product_name_lower or "freetrial" in product_name_lower:
+                tier = "Trial"
+            elif "hacker" in product_name_lower:
+                tier = "Hacker"
+            elif "enterprise" in product_name_lower:
+                tier = "Enterprise"
+            elif "sovereign" in product_name_lower:
+                tier = "Sovereign"
+            else:
+                # 完全無法識別時，記錄警告並拒絕寫入，避免客戶被降級
+                print(f"[Gumroad] ⚠️ 無法識別產品層級！permalink={permalink}, product={product_name}")
+                raise HTTPException(status_code=422, detail=f"Unknown product tier: {product_name}. Please contact support.")
             
         customer_name = name if name else "Gumroad User"
         

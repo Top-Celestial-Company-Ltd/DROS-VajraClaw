@@ -1,0 +1,81 @@
+# Vajra Execution Contract — V2 DCT Demo Policy
+# 本文件是 Vajra DSL V2 的示範策略，展示動態前綴資源規則（DCT）的正確使用方式。
+# 使用 `python cli.py build demo_policy_v2.yaml -o policy_v2.bin --v2` 編譯
+
+vajra_version: 1
+epoch: "2026-Q3-Project-Aegis-DCT-Demo"
+
+# ─── 傳統 V1 Bitmap 靜態授權部分（完整保留）────────────────────────────────
+
+agents:
+  - id: tenant-agent
+    role: tenant_worker
+  - id: admin-agent
+    role: platform_admin
+  - id: analytics-agent
+    role: read_only_analyst
+
+capabilities:
+  tenant-agent:
+    - READ_TENANT_DATA
+    - WRITE_TENANT_DATA
+  admin-agent:
+    - READ_TENANT_DATA
+    - WRITE_TENANT_DATA
+    - EXECUTE_ADMIN
+    - READ_AUDIT_LOG
+  analytics-agent:
+    - READ_TENANT_DATA
+
+tools:
+  - name: data.read
+    requires:
+      - READ_TENANT_DATA
+  - name: data.write
+    requires:
+      - WRITE_TENANT_DATA
+  - name: admin.system.reboot
+    requires:
+      - EXECUTE_ADMIN
+  - name: audit.log.read
+    requires:
+      - READ_AUDIT_LOG
+
+rules:
+  - match:
+      agent: analytics-agent
+      tool: data.write
+    effect: DENY   # analytics 只能讀，硬性 DENY 覆蓋 Capability
+
+# ─── V2 DCT 動態前綴資源規則（新增）──────────────────────────────────────
+#
+# V2 資源規則：租戶資料隔離（Tenant Data Isolation）
+# 核心保證：tenant-agent 只能存取自己租戶的資料路徑
+#
+# 物理約束（來自 Vajra DSL Spec V2 第 2.5 節）：
+#  ✅ ALLOW: prefix + {jwt.xxx} 佔位符
+#  ❌ DENY:  jwt.role == "manager"   (邏輯運算子)
+#  ❌ DENY:  A && B                  (複合條件)
+#  ❌ DENY:  cost < 100              (數值比較)
+#
+# 以下規則由 Vajra Compiler V2 解析後：
+#  - 生成靜態前綴 b"/data/tenant_" (64-byte aligned)
+#  - 記錄 attr_offset = 1 (jwt.tenant_id 在 ClaimsTable 中的索引)
+#  - Runtime 比對：SIMD 前綴匹配 + Claims 偏移查表 + 常數時間比較
+
+resources:
+  # 租戶資料路徑：只允許同一租戶的 Agent 存取
+  - prefix: /data/tenant_{jwt.tenant_id}
+    effect: ALLOW
+
+  # 使用者個人日誌路徑：根據 JWT Subject 隔離
+  - prefix: /logs/user_{jwt.sub}
+    effect: ALLOW
+
+  # 跨租戶共享的公開資產路徑（靜態前綴，無動態驗證）
+  - prefix: /assets/public/
+    effect: ALLOW
+
+  # 管理介面路徑：預設拒絕（即使有前綴也 DENY）
+  - prefix: /admin/
+    effect: DENY

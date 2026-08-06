@@ -4,8 +4,9 @@ import sys
 import os
 import binascii
 from emitter import emit_binary_v3, generate_keypair
+from emitter_v2 import parse_v2_extensions, emit_binary_v2_extended
 
-COMPILER_VERSION = "1.0.0"
+COMPILER_VERSION = "2.0.0"
 
 def expand_wildcard(pattern: str, all_tools: list) -> list:
     if not pattern.endswith('.*'):
@@ -191,8 +192,8 @@ def cmd_doctor(input_yaml: str):
         print("  [WARN] Sparse Matrix Detected. Consider Capability Refactor to avoid IAM explosion.")
     print("")
 
-def cmd_build(input_yaml: str, output_bin: str, key_hex: str = None):
-    print(f"\n[Vajra Compiler] Compiling policy from: {input_yaml}")
+def cmd_build(input_yaml: str, output_bin: str, key_hex: str = None, enable_v2: bool = False):
+    print(f"\n[Vajra Compiler V{'2' if enable_v2 else '1'}] Compiling policy from: {input_yaml}")
     if not os.path.exists(input_yaml):
         print(f"Error: {input_yaml} not found.")
         sys.exit(1)
@@ -218,15 +219,42 @@ def cmd_build(input_yaml: str, output_bin: str, key_hex: str = None):
         print(f"[Vajra Compiler] Using deterministic static key. PubKey: {verify_key.hex()}")
     else:
         signing_key_seed, verify_key = generate_keypair()
+        print("\033[93m[WARNING] 警告：系統正在生成臨時簽署金鑰 (Ephemeral Key)！\033[0m")
+        print("\033[93m          - 請勿在正式生產環境 (Production) 中使用臨時金鑰。\033[0m")
+        print("\033[93m          - 臨時金鑰每次編譯都會產生全新的簽章，會導致既有的執行端驗證失敗。\033[0m")
+        print("\033[93m          - 系統無原廠後門與萬能金鑰，金鑰一旦丟失，原廠完全無法代為復原或簽章。\033[0m")
+        print("\033[93m          - 為了系統穩定與災難復原能力，請生成固定的 Ed25519 金鑰種子，並透過 --key 參數傳入。\033[0m")
+        print("\033[93m          - 詳細的金鑰管理與備份指南，請參閱 docs/KEY_MANAGEMENT.md。\033[0m")
         print(f"[Vajra Compiler] Generated ephemeral signing key. PubKey: {verify_key.hex()}")
     
     try:
+        # Stage 1: Emit V1 binary (always)
         binary_payload = emit_binary_v3(epoch, dsl_version, COMPILER_VERSION, agents_list, tools_list, flat_rules, signing_key_seed)
+        
+        # Stage 2: If V2 mode, parse DCT extensions and append DCTX block
+        if enable_v2:
+            dct_rules, dct_errors, dct_warnings = parse_v2_extensions(policy)
+            
+            for w in dct_warnings:
+                print(f"[Vajra V2 Linter] {w}")
+            
+            if dct_errors:
+                for e in dct_errors:
+                    print(f"[Vajra V2 Linter] FATAL: {e}")
+                print("\n[Vajra Compiler] V2 Build aborted due to DCT FATAL errors.")
+                sys.exit(1)
+            
+            if dct_rules:
+                binary_payload = emit_binary_v2_extended(binary_payload, dct_rules)
+                print(f"[Vajra V2 Compiler] DCT Extension Block: {len(dct_rules)} prefix rules compiled.")
+            else:
+                print("[Vajra V2 Compiler] No 'resources' block found. Building in V1-compatible mode.")
         
         with open(output_bin, 'wb') as f:
             f.write(binary_payload)
         
-        print(f"[Vajra Compiler] Successfully emitted V3 execution artifact: {output_bin}")
+        mode_label = "V2 (DCT Extended)" if enable_v2 and dct_rules else "V1 (Bitmap Only)"
+        print(f"[Vajra Compiler] Successfully emitted {mode_label} execution artifact: {output_bin}")
         print(f"[Vajra Compiler] Binary Size: {len(binary_payload)} bytes.\n")
     except Exception as e:
         print(f"[Vajra Compiler] Compilation failed: {e}")
@@ -238,11 +266,12 @@ if __name__ == "__main__":
     parser.add_argument("input", help="Path to Vajra.md (YAML) policy")
     parser.add_argument("-o", "--output", default="policy.bin", help="Output binary file path (for build)")
     parser.add_argument("--key", help="Hex string of 32-byte deterministic seed key (for reproducible builds)")
+    parser.add_argument("--v2", action="store_true", help="Enable V2 DCT (Dynamic Capability Token) extension block")
     
     args = parser.parse_args()
     
     if args.command == "build":
-        cmd_build(args.input, args.output, args.key)
+        cmd_build(args.input, args.output, args.key, enable_v2=args.v2)
     elif args.command == "lint":
         cmd_lint(args.input)
     elif args.command == "doctor":
