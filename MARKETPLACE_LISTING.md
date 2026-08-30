@@ -2,94 +2,114 @@
 **The Execution Governance Standard for Agentic AI**
 
 [![Marketplace Status](https://img.shields.io/badge/GitHub_Marketplace-Available-success)](https://github.com/marketplace/dros-engine)
-[![License](https://img.shields.io/badge/License-Commercial-blue.svg)](#)
-[![Official Website](https://img.shields.io/badge/Website-dr--os.io-purple.svg)](https://dr-os.io)
-
-## 🛑 "If runtime needs intelligence, the system is already broken."
-Prompt Engineering is dead when it comes to enterprise security. No matter how complex your System Prompt is, Jailbreaks and Prompt Injections will find a way through. API Gateways fail because they assume human-driven execution constraints apply to agents.
-
-**DROS** is NOT a prompt wrapper. It is the **Execution Governance Standard**. We move intelligence to compile-time (Vajra.md) and enforce rules via a **Dual-Layer Security Architecture**:
-*   **L1 ATR Semantic Radar**: Intercepts prompt injections and indirect RAG/web context contamination (T001/T002) at the ingestion gateway.
-*   **L2 Vajra Enforcer**: An **O(1) Bitmap Runtime Engine** (`.dll` / `.so` / `.aar` / C-ABI dynamic library) enforcing strict syscall boundaries.
-
-If the Agent attempts an unauthorized action, DROS triggers a **Physical Fusing (Strict Fail-Closed)** in under 1 microsecond. 
-
-Verified under the **Agent Security Benchmark (ASB v1.1.0)**:
-*   **Zero-Trust Security**: 100.0% enforcement rate against Easy, Medium, Hard, and Adaptive attacks at L2 boundary (Difficulty Insensitivity).
-*   **Production Efficacy**: F1-Score of **0.973** and False Positive Rate (FPR) of **1.8%** (tested with $n=500$ benign workflows).
-*   **Extreme Performance**: 484.8 ns pure bitmap validation latency.
+[![License: 3-Tier Model](https://img.shields.io/badge/License-Standard_3--Tier_Model-blue.svg)](#)
+[![Official Website](https://img.shields.io/badge/Website-dr--os.io-purple.svg?style=for-the-badge)](https://dr-os.io)
+[![Patent Status](https://img.shields.io/badge/U.S._Patent-64%2F111%2C973-blue.svg)](#)
+[![RFC-010 Standard](https://img.shields.io/badge/Standard-RFC--010_Draft-orange.svg)](#)
 
 ---
 
-## 🔥 Enterprise Product Lines (V3 Ecosystem)
+## 🛑 "If runtime needs intelligence, the system is already broken."
+Prompt Engineering is dead when it comes to enterprise execution security. No matter how complex your System Prompt is, Jailbreaks and Prompt Injections will bypass natural language filters. Traditional API Gateways fail because they assume human-driven execution constraints apply to autonomous agents.
 
-### 1. DROS Free-Trial (PLG Edition)
-- **Zero-Friction Adoption**: Download the binary and experience O(1) interception in 3 minutes.
-- **Offline Timebomb**: 30-day RSA signed license. No need to connect to our servers to validate.
-- **Limit**: Binds 1 Machine UUID, Max 2 Concurrent Agents (Hardcoded at compile time).
+**DROS** is NOT a prompt wrapper. It is the **Execution Governance Standard**. We move intelligence to compile-time (`Vajra.md` / `demo_policy.yaml`) and enforce rules via a **Dual-Layer Deterministic Runtime Architecture**:
+* **L1 ATR Semantic Radar**: Intercepts prompt injections and indirect RAG/web context contamination at the ingestion gateway.
+* **L2 Vajra Enforcer**: An **O(1) Bitmap Runtime Engine** (`vajra_claw.dll` / `.so` / `.aar` / C-ABI dynamic library / Docker Gateway) enforcing strict syscall and tool execution boundaries.
 
-### 2. VajraClaw Hacker Tier
-- **Developer/Indie Focused**: Perfect for individual developers, researchers, and local single-machine experiments.
-- **Full Local SDK**: Access to core Go/Zig-based dynamic libraries (`.dll` / `.so` / `.dylib`) and C-FFI bindings. Includes `dros-cli` for automated AST contract compilation.
-- **Limit**: Binds 1 Machine UUID, Max 5 Concurrent Agents. No control plane mesh.
+If the Agent attempts an unauthorized action, DROS triggers a **Physical Fusing (Strict Fail-Closed)** in under 1 microsecond.
 
-### 3. DROS Engine (Core Runtime)
-- **Compile-Time Intelligence**: Write policies in `Vajra.md`, compile them into deterministic Bitmaps.
-- **O(1) Execution**: Pure bitwise AND operations. Zero JSON parsing at runtime. Zero TOCTOU vulnerabilities.
-- **Multi-Language SDKs**: Native Python `vajraclaw` module included. Wrap LangChain/AutoGen tools in 1 line of code.
+---
 
-### 4. DROS Engine+ (Enterprise Audit)
-- **Cryptographic Audit**: `SHA-256 Policy Hash` and `Compiler Version` are bound to every audit trace. Prove to your CISO exactly *why* an agent made a decision.
-- **Sealed Binary Policy**: Ed25519 signatures prevent tampering.
-- **Policy Epoch Lock**: Prevent downgrade attacks in distributed microservices.
-- **Scale Limit**: Max 15 installations, each supporting 30 concurrent agents (Total 450 concurrent agents). Scale beyond this requires Corporate / VajraAgent Mesh custom quote.
+## 🏛️ The 6-Pillars Enterprise AI Trust Model (DROS-6P)
 
-### 5. VajraAgent (Mesh / Corporate)
-- **Centralized Visual CommandCenter**: Point-and-click IAM monitoring, real-time 0.37ms interception visualization, and global system health tracking.
-- **fully On-Premise & Air-Gapped Support**: Deployable in fully disconnected, high-security private datacenters (FinTech/Healthcare/Government).
-- **K8s Helm & Ansible Automated Deployment**: Native Helm charts and Ansible playbooks for zero-touch provisioning and auto-scaling across thousands of microservices.
-- **Mesh OTA & 1ms Global Kill-Switch**: Push cryptographically signed `policy.bin` updates to all nodes globally in real-time, featuring a 1ms instantaneous emergency block broadcast.
-- **MCP Reverse Proxy**: Zero-code integration. Point any Model Context Protocol (MCP) compatible agent to VajraAgent for instant execution governance.
+DROS-VajraClaw enforces six fundamental trust boundaries in real time at the C-ABI / FFI in-band execution layer:
 
-### 6. DROS Mobile SDK (Zero-Trust Endpoint)
-- **Gomobile Android AAR**: O(1) engine compiled natively for mobile edge devices.
-- **Offline Safe Degraded (Mode C)**: If the phone is offline, automatically downgrade to a Read-Only sandbox. Block all write actions (e.g., transfers) while keeping read queries functional.
+1. **Principal (Identity)**: 3-tier PKI-signed `DrosIdentityToken (DIT)` and native W3C `did:key` (Ed25519) for unbypassable agent identity binding.
+2. **Authorization (Deterministic)**: Immutable $\mathcal{O}(1)$ capability bitmaps mapping agent roles to execution vectors.
+3. **Action Bound (Syscall Gate)**: Sub-microsecond (<500ns) binary interception enforcing hard physical OS limits.
+4. **Policy Gate (Dynamic Control)**: Dynamic data redaction, Human-In-The-Loop (HITL), and ZKP-Lite zero-knowledge proofs.
+5. **Audit Log (Non-repudiability)**: SHA-256 Merkle Hash Chain + Ed25519 signatures, fully compliant with EU AI Act Art. 12.
+6. **Expiry / Revocation (Microsecond)**: Constant-time $\mathcal{O}(1)$ dynamic bitmap updates for microsecond-level revocation and instant HTTP 403 enforcement.
+
+---
+
+## 🔥 Product Lines & Deployment Editions
+
+### 1. DROS VajraClaw Hacker Edition (Free Docker Gateway)
+* **Target**: Individual developers, AI researchers, and local single-machine multi-agent workstations.
+* **Included**: Standalone Docker Gateway (`localhost:8080`), W3C `did:key` identity binding, O(1) AST policy fusing, and persistent SHA-256 Merkle audit chains.
+* **Capacity**: Binds 1 Host, Max 5 Concurrent Agents.
+* **Repository**: [`Top-Celestial-Company-Ltd/DROS-VajraClaw-Hacker`](https://github.com/Top-Celestial-Company-Ltd/DROS-VajraClaw-Hacker)
+
+### 2. DSH Community Plugin (`dsh-plugin-vajraclaw`)
+* **Target**: DeepSeek Harness (DSH) users.
+* **Included**: 100% Zero-Dependency pure ESM TypeScript plugin. Instant regex tool-call failsafe and local persistent JSONL hash audit chain.
+* **License**: Apache 2.0 Open Source (Free for Community).
+* **Repository**: [`Top-Celestial-Company-Ltd/dsh-dros-vajraclaw`](https://github.com/Top-Celestial-Company-Ltd/dsh-dros-vajraclaw)
+
+### 3. DROS Startup Edition
+* **Target**: Fast-growing AI startups, agentic SaaS MVP platforms, and small engineering teams.
+* **Included**: C-ABI Native Libraries (`.dll` / `.so`), Multi-Language SDKs (Python, TypeScript, Go, Java, Rust), Ed25519 Signed Policies, and REST/MCP Gateway.
+* **Capacity**: Binds 3 Machine Hosts, Max 10 Concurrent Agents per host (Total 30 Concurrent Agents).
+
+### 4. DROS Enterprise Audit Edition
+* **Target**: High-security corporate environments (FinTech, Healthcare, Semiconductor, Government).
+* **Included**: C-ABI Zero-Copy Enforcement Kernel (<500ns), Hardware HSM / TPM Key Binding, Dynamic PII Redaction, EU AI Act Article 12 Court-Grade Merkle Audit, and Air-Gapped / Private Cloud Deployment.
+* **Capacity**: Binds 15 Machine Hosts, Max 30 Concurrent Agents per host (Total 450 Concurrent Agents).
+
+### 5. VajraAgent Sovereign Mesh & Source Buyout
+* **Target**: National defense, sovereign AI infrastructure, tier-1 financial institutions.
+* **Included**: Full C-ABI / Go / Rust source code escrow, centralized IAM Control Plane, K8s Helm charts, sub-millisecond global kill-switch OTA, and customized hardware accelerators.
 
 ---
 
 ## 💻 Zero-Pollution Integration (Python Example)
+
 ```python
-from vajraclaw import VajraClaw
+from integrations.vajraclaw.runtime import VajraClaw
 
 # 1. Mount the Signed Binary Policy
-vc = VajraClaw("policy.bin")
+vc = VajraClaw("demo_policy.yaml")
 
 # 2. Evaluate the Tool Call in O(1) Time
-decision = vc.evaluate("customer_service", "admin.delete_user")
+decision = vc.evaluate("execute_payment", {"amount": 500})
 
 # 3. Deterministic Enforcement
-if decision == "BLOCK":
-    raise PermissionError("Action blocked by DROS Execution Kernel.")
+if not decision:
+    raise PermissionError(f"Action blocked by DROS Execution Kernel: {decision.reason}")
 ```
 
 ---
 
-## 🔒 Zero-Trust Privilege Separation
-DROS enforces strict privilege separation at the OS level. The AI Agent must **never** be granted write permissions to `policy.bin`. In enterprise Kubernetes/Docker deployments, the policy is mounted as a **Read-Only ConfigMap**. Even if the LLM becomes entirely hostile, OS-level file permissions will physically deny tampering.
+## 💰 Commercial Pricing & Licensing Matrix
 
----
-
-## 💰 Pricing & Licensing (Commercial)
-
-| Tier | Price | Best For | Included |
+| Tier | Pricing | Best For | Licensing & Governance Scope |
 | :--- | :--- | :--- | :--- |
-| **Free Trial** | $0 | Solo devs, PoC | Binds 1 Machine UUID, Max 2 Concurrent Agents |
-| **VajraClaw Hacker** | $149 / yr | Personal, Single-Machine | Binds 1 Machine UUID, Max 5 Concurrent Agents, Local SDK |
-| **Startup License** | $799 / yr | Small teams & SaaS MVP | Binds 3 Machine UUIDs, Max 10 Concurrent Agents per machine, SDK |
-| **Enterprise Audit** | $7,990 / yr | High-Security Corporate (FinTech) | Binds 15 Machine UUIDs, Max 30 Concurrent Agents per machine, Ed25519, SHA-256 Audit |
-| **VajraAgent Mesh**| Custom | Enterprise Deployments | Control Plane, MCP Proxy, Global OTA Updates |
-| **Source Code Buyout**| Custom | Defense, Medical | Full Source Code (Go/Zig), Audit Reports, White-labeling rights |
+| **Hacker (Docker Gateway)** | **$0 (Permanent Free)** | Solo developers, researchers | Free License for Individuals (1 Host, 5 Concurrent Agents, W3C DID, O(1) AST Gate) |
+| **DSH Plugin (TS Failsafe)** | **$0 (Apache-2.0)** | DSH IDE users | Zero-Dependency in-process regex failsafe & local JSONL hash chain |
+| **Startup License** | **$2,990 / yr** | AI Startups, SaaS MVPs | 3 Hosts, 10 Agents/host, Native C-ABI SDKs, Ed25519 Binary Policies |
+| **Enterprise Audit** | **$29,990 / yr** | FinTech, Healthcare, Corp | 15 Hosts, 30 Agents/host, EU AI Act Art. 12 Merkle Audit, HSM Binding, Air-Gapped |
+| **Sovereign Mesh / Source** | **Custom Quote** | Defense, Critical Infra | Full Source Code Buyout, K8s Helm Mesh, Global Instant Kill-Switch OTA |
 
 ---
-**Developed by DROS Labs / 康宸園有限公司 / Jimmy Chen**
-*Securing the autonomous frontier through Deterministic Execution.*
+
+## 📜 Technical Foundations & Academic Citations (Zenodo Trilogy)
+
+If you reference DROS zero-trust execution governance in your architecture or research, please cite the official DROS Trilogy on Zenodo:
+
+* 📖 **[DROS Trilogy Reading Guide (Technical Note)](https://doi.org/10.5281/zenodo.22114036)**: *An Agent Runtime Operation Substrate: Technical Foundations, Reading Guide, and Roadmap for the DROS Paper Trilogy* (Zenodo: [`10.5281/zenodo.22114036`](https://doi.org/10.5281/zenodo.22114036))
+* 🏛️ **Paper 1: DROS-6P** — *A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents* (DOI: [`10.5281/zenodo.21833970`](https://doi.org/10.5281/zenodo.21833970))
+* 🏛️ **Paper 2: DROS 4-Layer (v3)** — *Bridging the Agent-to-Execution Attribution Gap in Autonomous AI Workloads: A 4-Layer Deterministic Runtime Operating System* (DOI: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008))
+* 🏛️ **Paper 3: DROS-PGM** — *A Deterministic Kernel-Level Execution Control Plane for Post-Compromise Security in Autonomous AI Systems* (DOI: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687))
+
+---
+
+## ⚖️ Standard 3-Tier License & Patent Constitution
+
+* **Core Enforcement Substrate**: Protected under U.S. Provisional Patent Application (**U.S. PPA No. 64/111,973, Patent Pending**). All commercial and enterprise rights reserved by Top-Celestial Company Ltd.
+* **Community Client & Docker Gateway**: Free License for Individuals (Permanent free non-commercial license for solo developers on single workstations).
+* **Benchmark Testbed**: Open Source under Apache 2.0 ([DROS-VEP Lite](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)).
+
+---
+**Developed by DROS Labs / 康宸園有限公司 (Top-Celestial Company Ltd.)**  
+*Official Portal: [https://dr-os.io](https://dr-os.io) | Contact: [service@dr-os.io](mailto:service@dr-os.io)*
