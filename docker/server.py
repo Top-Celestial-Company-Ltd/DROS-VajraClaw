@@ -105,7 +105,7 @@ class DrosGatewayHandler(BaseHTTPRequestHandler):
             start_t = time.perf_counter()
             try:
                 if vc:
-                    eval_res = vc.evaluate(tool, args, agent_id=agent_id)
+                    eval_res = vc.evaluate(tool=tool, payload_or_agent_id=args, args_json=json.dumps(args))
                     decision = "ALLOW" if eval_res else "BLOCK"
                     reason = eval_res.reason if hasattr(eval_res, 'reason') else "Evaluated by policy"
                 else:
