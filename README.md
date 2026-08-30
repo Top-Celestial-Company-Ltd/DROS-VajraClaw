@@ -47,19 +47,25 @@ DROS-VajraClaw enforces six fundamental trust boundaries in real time at the C-A
 ## 📜 Technical Foundations & Benchmark Publications
 
 ## 📜 Technical Foundations & Benchmark Publications
-If you reference DROS zero-trust execution governance in your research or enterprise architecture, please cite the DROS Academic Trilogy on Zenodo:
 
-* 📖 **[DROS Trilogy Reading Guide (Technical Note)](https://doi.org/10.5281/zenodo.22114036)**: *An Agent Runtime Operation Substrate* (Zenodo: [10.5281/zenodo.22114036](https://zenodo.org/records/22114036))
-* 🏛️ **Paper 1: DROS-6P** — *A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents* (DOI: [`10.5281/zenodo.21833970`](https://doi.org/10.5281/zenodo.21833970))
-* 🏛️ **Paper 2: DROS 4-Layer (v3)** — *Bridging the Agent-to-Execution Attribution Gap in Autonomous AI Workloads: A 4-Layer Deterministic Runtime Operating System* (DOI: [`10.5281/zenodo.22092008`](https://doi.org/10.5281/zenodo.22092008))
-* 🏛️ **Paper 3: DROS-PGM** — *A Deterministic Kernel-Level Execution Control Plane for Post-Compromise Security in Autonomous AI Systems* (DOI: [`10.5281/zenodo.21903687`](https://doi.org/10.5281/zenodo.21903687))
+The deterministic execution governance, microsecond fusing, and cryptographic audit mechanisms in this project are referenced from and build upon the following core technical papers and verification environments:
 
-### 📖 Full Technical Whitepapers
-* 📖 **[Full Whitepaper (English v2.5)](docs/DROS_AgenticWeb_Defense_Whitepaper_EN.md)**: *Zero-Trust Execution Governance for Autonomous AI Workloads (DROS 4-Layer & 6P Model)*
-* 📖 **[完整技術白皮書 (繁體中文 v2.5)](docs/DROS_AgenticWeb_Defense_Whitepaper_CN.md)**: *自主型 AI 工作負載的零信任執行治理 (DROS 四層防禦縱深與 6P 模型)*
-* 🏛️ **[Defensive Publication & Prior Art Declaration](docs/DEFENSIVE_PUBLICATION.md)**: *Prior Art declaration establishing DROS Compile-time & O(1) Bitmap governance*
+1. **Core Architecture & Six Trust Boundaries (Core Architecture)**:
+   * **Paper**: *DROS-6P: A Unified Deterministic Runtime Governance Architecture Closing the Six Fundamental Trust Boundaries of Enterprise AI Agents*
+   * **Zenodo DOI**: [10.5281/zenodo.21833970](https://doi.org/10.5281/zenodo.21833970) | **Archived Record**: [zenodo.org/records/21833970](https://zenodo.org/records/21833970)
 
----
+2. **Defense-in-Depth Model (4-Layer Security)**:
+   * **Paper**: *DROS 4-Layer Defense-in-Depth Architecture for Autonomous AI Workloads*
+   * **Zenodo DOI**: [10.5281/zenodo.21903475](https://doi.org/10.5281/zenodo.21903475) | **Archived Record**: [zenodo.org/records/21903475](https://zenodo.org/records/21903475)
+
+3. **Runtime Attribution & C-ABI Module (Attribution Framework)**:
+   * **Paper**: *Runtime Attribution Framework: An External C-ABI and PKI-Based Zero-Trust Infrastructure for Non-Repudiable Execution Governance in Multi-Agent Systems*
+   * **Zenodo DOI**: [10.5281/zenodo.21903687](https://doi.org/10.5281/zenodo.21903687) | **Archived Record**: [zenodo.org/records/21903687](https://zenodo.org/records/21903687)
+
+4. **Open Standards & Verification Sandbox**:
+   * **RFC-010 Specification**: Adheres to open Agent Identity & Attestation standard (W3C DID did:key & Ed25519 signature chain).
+   * **Verification Sandbox**: [DROS-VEP Lite (Reproducible Evaluation Sandbox)](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)
+   * **Evaluation Metrics**: 24-hour soak benchmark results (160,611 verified requests, 26.1μs decision latency).
 
 ## 🚀 Multi-Scenario Deployment & Setup Guide
 
@@ -107,4 +113,3 @@ if not decision:
 
 *Developed by DROS Labs / 康宸園有限公司 (Top-Celestial Company Ltd.)*  
 *Protected under U.S. Provisional Patent Application No. 64/111,973 (Patent Pending).*
-
