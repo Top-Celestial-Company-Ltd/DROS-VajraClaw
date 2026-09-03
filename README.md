@@ -71,14 +71,16 @@ Declare allowed capabilities and hard security boundaries in plain Markdown:
 ---
 
 
-> [!IMPORTANT]
-> 🔒 **Crucial Security Best Practice: Lock `Vajra.md` to Read-Only After Configuration!**
-> To prevent compromised or hallucinating AI Agents from attempting to rewrite their own security rules to escalate privileges, **always set your policy file to read-only once configured**:
+> [!CAUTION]
+> 🔒 **Crucial Meta-Authority Warning: Human Manual Seal & OS Read-Only Lock!**
+> **Never allow an AI Agent to generate or insert rules prohibiting the modification of `Vajra.md` itself.** If the AI has write permission, a compromised agent can simply delete or comment out the rule before attacking (Self-Referential Trap).
+> **The Rule:** The invariant boundary protecting the policy file MUST be manually pasted by a human developer, followed by an OS-level read-only lock:
+> - **Human Invariant**: Add `<!-- [HUMAN SEALED] -->` with `DENY WRITE/DELETE path: "**/vajra.md"`
 > - **Linux / macOS**: `chmod 444 Vajra.md`
-> - **Windows (PowerShell)**: `Set-ItemProperty -Path Vajra.md -Name IsReadOnly -Value $true`
+> - **Windows (PowerShell)**: `attrib +r Vajra.md` (or `icacls Vajra.md /deny "Users:(W)"`)
 > - **Docker Container Mount**: Mount with the read-only flag `-v $(pwd)/Vajra.md:/app/demo_policy.yaml:ro`
 > 
-> *(Note: DROS kernel enforces 4-Layer Invariant Defense to intercept unauthorized policy modifications in-band; combining this with OS file-level locks achieves 100% airtight physical defense!)*
+> 📖 **Full Guide**: See the [Hacker Edition Long-Task Developer Manual](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/main/docs/guides/DROS_HACKER_EDITION_MANUAL.md) for step-by-step setup, 3-tier alert channels, and temporary unlock SOP.
 
 
 ### 2. 🤖 Let AI Generate Your Policy in 1 Second! (AI Prompt Template)
@@ -251,6 +253,32 @@ if not decision:
 *Protected under U.S. Provisional Patent Application No. 64/111,973 (Patent Pending).*
 
 
+---
+
+## 🧭 Product Positioning: The Final Runtime Enforcement Boundary for Agent Governance
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│             Governance defines what SHOULD be allowed.                      │
+│             DROS enforces what can ACTUALLY execute.                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+**DROS is a deterministic Agent Runtime Enforcement Substrate situated at the OS/Kernel execution boundary.**
+
+DROS provides end-to-end, closed-loop governance across the **Six Essential Trust Boundaries**:
+1. **Principal:** Cryptographically authenticating the acting runtime principal ($P_1$);
+2. **Authorization:** Verifying explicit execution authority via constant-time capability bitmasks ($P_2$);
+3. **Tool / Action Bound:** Constraining permissible tools and validating structured schema parameters ($P_3$);
+4. **Policy Gate:** Performing deterministic, sub-microsecond policy evaluations for every invocation ($P_4$);
+5. **Audit Log:** Committing immutable, verifiable execution and attribution records ($P_5$);
+6. **Expiry / Revocation:** Enforcing epoch-bounded token lifecycles with atomic sub-microsecond revocation ($P_6$).
+
+### 🛡️ Non-Replacement Principle
+DROS **does not replace** existing Agent Governance, IAM, Risk Management, or Compliance frameworks. Instead, DROS enforces their constraints at the physical **Runtime Execution Path**, establishing the **Final Trust Boundary** as a deterministic binary gate.
+
+---
+
 ## 🛡️ Governance & Defense Capability Matrix
 
 | Threat Vector / Capability | Traditional LLM Guardrails (NeMo/Lakera) | 📦 DSH Standalone TS Plugin | 🛡️ DROS Hacker Docker Gateway | 🏢 Enterprise / Mesh Tier |
@@ -265,3 +293,4 @@ if not decision:
 | **RFC-010 Passports** | 🔴 Unsupported | 🟢 Format Parser | 🟢 **Local Minting & Cross-Agent Verification** | 🟢 **Cross-Organization Roaming Passports** |
 | **Decision Latency** | 🔴 1,000 ~ 3,000 ms (Slow LLM) | 🟢 **<1 ms (Direct In-Memory Hook)** | 🟢 **<1 µs (C-ABI) / <1 ms (REST Gateway)** | 🟢 **<500 ns (Zero-Copy Memory Lookup)** |
 | **License** | Pay-per-Token API | **100% Free (Apache-2.0)** | **Free License for Individuals** | Startup $2,990 / Enterprise $29,990 |
+

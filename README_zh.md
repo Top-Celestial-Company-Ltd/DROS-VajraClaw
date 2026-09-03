@@ -78,14 +78,16 @@ DROS 支援兩種極簡設定方式：**人類直覺 Markdown 格式 (`Vajra.md`
 ---
 
 
-> [!IMPORTANT]
-> 🔒 **極重要安全提示：設定完成後請將 `Vajra.md` 設為唯讀 (Read-Only)！**
-> 為了徹底杜絕失控或遭受提示詞注入 (Prompt Injection) 的 AI Agent 試圖「自己改寫安全策略」來為自己解鎖特權，**請在設定完成後，將該檔案權限鎖定為唯讀**：
+> [!CAUTION]
+> 🔒 **極核心元權限警語：人類主權剛性封印與作業系統唯讀硬鎖定！**
+> **絕對禁止讓 AI Agent 自行生成或寫入「禁止修改 Vajra.md」這條指令！** 若 AI 擁有編輯權限，一旦遭到提示詞注入劫持，隨時可以在攻擊前先調用工具將該規則刪除或註釋掉（自指迴圈漏洞）。
+> **鐵律：** 保護規則檔本身的剛性邊界，在邏輯上**必須由人類開發者親手貼入**，並在終端執行作業系統唯讀鎖死：
+> - **人類封印**：在檔案頂部貼入 `<!-- [HUMAN SEALED] -->` 與 `DENY WRITE/DELETE path: "**/vajra.md"`
 > - **Linux / macOS**: `chmod 444 Vajra.md`
-> - **Windows (PowerShell)**: `Set-ItemProperty -Path Vajra.md -Name IsReadOnly -Value $true`
+> - **Windows (PowerShell)**: `attrib +r Vajra.md`（或 `icacls Vajra.md /deny "Users:(W)"`）
 > - **Docker 掛載時**: 使用唯讀掛載模式 `-v $(pwd)/Vajra.md:/app/demo_policy.yaml:ro`
 > 
-> *(註：DROS 內核自帶「四重不變量防禦」，任何針對核心策略檔的寫入 Syscall 都會被微秒級攔截熔斷；搭配作業系統檔案鎖可達成 100% 物理防禦！)*
+> 📖 **完整教學**：請參閱 [Hacker Edition (個人社群免費版) 長任務開發者手冊](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite/blob/main/docs/guides/DROS_HACKER_EDITION_MANUAL.md)，內含 4 步曲手動設定、越權三重感官警報與暫時解封 SOP。
 
 
 ### 2. 🤖 讓 AI 幫你一秒生成策略！(AI Prompt Template)
