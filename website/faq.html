@@ -113,7 +113,7 @@
             <div class="faq-question">How does VajraClaw prevent Prompt Injections (Data Poisoning)?</div>
             <div class="faq-answer">
                 <p>Prompt injections often occur when an LLM reads external data (like an infected web page or RAG document) containing malicious hidden instructions, hijacking the LLM to execute unauthorized API calls or leak data.</p>
-                <p>VajraClaw operates as an ingress/egress physical filter. Even if the LLM's "brain" is hijacked by a prompt injection, the LLM's "hands" are bound by the Vajra Claw. When the hijacked LLM attempts an unauthorized Egress action, the C-FFI physical circuit breaker triggers, stopping the injection dead in its tracks. It's a 100% deterministic block.</p>
+                <p>VajraClaw operates as an ingress/egress physical filter for registered action paths. Even if the LLM's "brain" is hijacked by a prompt injection, an unauthorized action submitted through a governed path is rejected by the deterministic policy boundary. This is a scoped enforcement claim, not a promise that every unregistered host process topology is closed.</p>
             </div>
         </div>
 
@@ -137,6 +137,14 @@
             <div class="faq-question">My enterprise requires strict Air-Gapping. Does VajraClaw phone home?</div>
             <div class="faq-answer">
                 <p>The <strong>Enterprise Tier</strong> is 100% Air-Gapped. It uses an RSA-Signed offline <code>.lic</code> timebomb validation mechanism. There is absolutely zero outbound telemetry, no heartbeat servers, and no API tax. Your data never leaves your internal Kubernetes clusters.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Does DROS claim to block every CLI path an Agent could create?</div>
+            <div class="faq-answer">
+                <p><strong>No universal claim is made.</strong> DROS governs execution paths that are explicitly registered with the canonical execution-authority boundary.</p>
+                <p>For MCP integrations, arbitrary shell capabilities are deny-by-default. Semantic tools should use typed arguments, verified principal credentials, executable-integrity binding, expiry/revocation, and structured audit. This reduces exposure without claiming that every host process-creation topology is already closed.</p>
             </div>
         </div>
     </section>
