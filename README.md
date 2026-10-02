@@ -150,7 +150,7 @@ Declare allowed capabilities and hard security boundaries in plain Markdown:
 > - **Windows (PowerShell)**: `Set-ItemProperty -Path Vajra.md -Name IsReadOnly -Value $true`
 > - **Docker Container Mount**: Mount with the read-only flag `-v $(pwd)/Vajra.md:/app/demo_policy.yaml:ro`
 > 
-> *(Note: DROS kernel enforces 4-Layer Invariant Defense to intercept unauthorized policy modifications in-band; combining this with OS file-level locks achieves 100% airtight physical defense!)*
+> *(Note: DROS kernel enforces 4-Layer Invariant Defense to intercept unauthorized policy modifications in-band; combining this with OS file-level locks provides deterministic in-band policy enforcement within the protected application runtime.)*
 
 
 ### 2. 🤖 Let AI Generate Your Policy in 1 Second! (AI Prompt Template)
@@ -203,7 +203,6 @@ The deterministic execution governance, microsecond fusing, and cryptographic au
 4. **Open Standards & Verification Sandbox**:
    * **RFC-010 Specification**: Adheres to open Agent Identity & Attestation standard (W3C DID did:key & Ed25519 signature chain).
    * **Verification Sandbox**: [DROS-VEP Lite (Reproducible Evaluation Sandbox)](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)
-   * **Evaluation Metrics**: 24-hour soak benchmark results (160,611 verified requests, 26.1μs decision latency).
 
 ## 🚀 Multi-Scenario Deployment & Setup Guide
 

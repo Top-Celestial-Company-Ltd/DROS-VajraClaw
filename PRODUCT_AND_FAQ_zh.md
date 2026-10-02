@@ -100,7 +100,6 @@ DROS-VajraClaw 於 C-ABI / FFI 帶內執行層實時強制執行六大基礎信�
 4. **開源技術標準與實測基準倉 (Open Standard & Verification Sandbox)**:
    * **RFC-010 規範**: 遵循開放 Agent 身分與存證規範（W3C DID `did:key` 與 Ed25519 簽章鏈）。
    * **實測基準環境**: [DROS-VEP Lite (可復現安全評測沙盒)](https://github.com/Top-Celestial-Company-Ltd/DROS-VEP-lite)
-   * **實測報告**: 涵蓋 24 小時長效多場景測試數據（160,611 次請求驗證，決策延遲 26.1μs）。
 
 ---
 
