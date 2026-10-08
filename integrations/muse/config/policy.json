@@ -1,0 +1,17 @@
+{
+  "version": "0.1.0",
+  "mode": "fail_closed",
+  "policy_order": [
+    "ttl",
+    "posture",
+    "capability",
+    "payload",
+    "allowlist",
+    "default_deny"
+  ],
+  "allowed_capabilities": [
+    "system.run",
+    "file.read",
+    "file.write"
+  ]
+}
